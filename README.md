@@ -1,4 +1,4 @@
-# Base64 Converter 🚀
+# Simple Base64 Converter 🚀
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Active-green)](https://cagatayuresin.github.io/simple-base64-encoder/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
