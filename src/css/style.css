@@ -1,0 +1,14 @@
+/* Additional custom styles */
+.footer-icons a {
+  margin: 0 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+#github:hover {
+  color: #333;
+}
+
+#linkedin:hover {
+  color: #0077b5;
+}
