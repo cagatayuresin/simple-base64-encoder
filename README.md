@@ -1,6 +1,8 @@
 # Base64 Converter 🚀
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Active-green)](https://yourusername.github.io/your-repository-name/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Active-green)](https://cagatayuresin.github.io/simple-base64-encoder/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+[Github Pages](https://cagatayuresin.github.io/simple-base64-encoder/)
 
 Welcome to the **Base64 Converter** project! 🎉 This application provides a simple and intuitive interface to encode and decode text using Base64 encoding. It’s built with HTML, JavaScript, and Bulma CSS, and includes handy features like dynamic row addition and clipboard copy functionality. 😎
 
