@@ -1,36 +1,78 @@
 # Simple Base64 Converter 🚀
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Active-green)](https://cagatayuresin.github.io/simple-base64-encoder/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Active-green)](https://cagatayuresin.github.io/simple-base64-encoder/)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[Github Pages](https://cagatayuresin.github.io/simple-base64-encoder/)
+🔗 **Live Demo:** [https://cagatayuresin.github.io/simple-base64-encoder/](https://cagatayuresin.github.io/simple-base64-encoder/)
 
-Welcome to the **Base64 Converter** project! 🎉 This application provides a simple and intuitive interface to encode and decode text using Base64 encoding. It’s built with HTML, JavaScript, and Bulma CSS, and includes handy features like dynamic row addition and clipboard copy functionality. 😎
-
-## Features ✨
-
-- **Two Column Layout:**  
-  - **Left Column:** Contains the Base64 encoded text along with a copy button featuring a FontAwesome icon.  
-  - **Right Column:** Contains the plain text that can be updated dynamically.
-- **Dynamic Row Addition:** Click the "Add Row" button to insert new conversion rows below the initial ones. ➕
-- **Responsive & Clean Design:** Built with [Bulma CSS](https://bulma.io/) for a modern look.
-- **Easy Clipboard Copy:** Simply click the copy button to copy the Base64 text to your clipboard. 📋
-
-## Project Structure 📁
-
-- **index.html:** Main HTML file in the root directory.
-- **src/**  
-  - **css/style.css:** Contains all the CSS styling for the project.  
-  - **js/script.js:** Handles all the JavaScript functionality (dynamic rows, conversion, copy feature, etc.).  
-  - **img/**: Contains your logo image (ensure the path in index.html is correct).
-
-## Contributing 🤝
-
-Contributions are welcome! Feel free to fork the repository, make changes, and submit pull requests. Open an issue if you have any suggestions or find a bug.
-
-## License 📄
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+Welcome to the **Simple Base64 Converter**, a sleek, feature-rich tool to encode and decode text using Base64.  
+Built with **HTML**, **JavaScript**, and **Bulma CSS**, this app focuses on clean UI/UX and real developer needs.  
 
 ---
 
-Happy Coding! 😄👍
+## ✨ Features
+
+- 🧮 **Real-Time Base64 Encoding & Decoding**  
+  Bi-directional auto conversion between plain text and Base64.
+
+- 📝 **Dynamic Textarea Resizing**  
+  Textareas start as a single line and grow with content automatically.
+
+- ➕ **Add Unlimited Rows**  
+  Use the ➕ button to create as many converter rows as you need.
+
+- 🧼 **Clear & Copy Buttons on Each Field**  
+  Instantly copy or clear individual text areas with intuitive controls.
+
+- 🌓 **Dark Mode Toggle with Icon Animation**  
+  Light/Dark mode switch with animated theme icon (sun/moon), auto-saved in localStorage.
+
+- 💾 **Auto-Save to LocalStorage**  
+  Your input is preserved even after a page refresh.
+
+- 🖥️ **Responsive Layout**  
+  Mobile-friendly, scroll-free, clean and adaptable layout.
+
+---
+
+## 📁 Project Structure
+
+```plaintext
+root 
+├── index.html # Main HTML page 
+├── src/ 
+│ ├── css/style.css # Custom styles (Bulma override, theme, etc.) 
+│ ├── js/script.js # All JavaScript logic (rows, encode/decode, themes, etc.)
+│ ├── img/prewiew.png
+│ └── img/logo.png # Project logo (used in footer) 
+└── README.md # This file
+```
+
+---
+
+## 🧠 Technologies Used
+
+- 💡 [Bulma CSS](https://bulma.io/) - For rapid responsive design
+- 💪 Vanilla JavaScript - Pure and powerful, no dependencies
+- 🎨 FontAwesome - For beautiful interactive icons
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Fork the repo, submit pull requests, and help improve this tool.  
+If you encounter bugs or want to suggest features, feel free to [open an issue](https://github.com/cagatayuresin/simple-base64-encoder/issues).
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.  
+See the [LICENSE](LICENSE) file for more details.
+
+---
+
+> Built with passion by [Çağatay Üresin](https://cagatayuresin.com) 💙  
+> Perfect for developers, educators, and anyone who loves clean tools that just work.
+
+Happy Coding! 🚀✨

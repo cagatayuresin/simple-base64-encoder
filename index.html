@@ -3,7 +3,37 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Simple Base64 Encoder</title>
+    <!-- Primary Meta Tags -->
+    <title>Simple Base64 Encoder - Encode & Decode Instantly</title>
+    <meta name="title" content="Simple Base64 Encoder - Encode & Decode Instantly">
+    <meta name="description"
+        content="A clean, modern tool to quickly encode and decode Base64 text. Supports multiple rows, dark mode, copy/clear features, and auto-save. Built by Çağatay Üresin.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cagatayuresin.github.io/simple-base64-encoder/">
+    <!-- Replace with your actual URL -->
+    <meta property="og:title" content="Simple Base64 Encoder - Encode & Decode Instantly">
+    <meta property="og:description"
+        content="A clean, modern Base64 encoder/decoder with dark mode, auto-save, and smart textarea resizing. Built for developers.">
+    <meta property="og:image" content="https://cagatayuresin.github.io/simple-base64-encoder/src/img/preview.png">
+    <!-- Ideal: 1200x630 image -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://cagatayuresin.github.io/simple-base64-encoder/">
+    <meta property="twitter:title" content="Simple Base64 Encoder - Encode & Decode Instantly">
+    <meta property="twitter:description"
+        content="A developer-focused Base64 converter with clean UI, multiple rows, auto save, and dark mode. Try it now!">
+    <meta property="twitter:image" content="https://cagatayuresin.github.io/simple-base64-encoder/src/img/preview.png">
+
+    <!-- Canonical & SEO keywords -->
+    <link rel="canonical" href="https://cagatayuresin.github.io/simple-base64-encoder/">
+    <meta name="keywords"
+        content="Base64 encoder, Base64 decoder, JavaScript tool, web dev, encode string, decode text, Çağatay Üresin">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Çağatay Üresin">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bulma CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <!-- FontAwesome CDN -->
@@ -22,6 +52,13 @@
             <div class="has-text-centered" style="margin-top: 20px;">
                 <button id="addRowButton" class="button is-primary"><i
                         class="fa-solid fa-plus fa-beat-fade"></i></button>
+            </div>
+            <div class="has-text-centered" style="margin-top: 10px;">
+                <button id="clearAllButton" class="button is-danger"><i class="fa-solid fa-trash"></i> &nbsp; Clear
+                    All</button>
+                <button id="themeToggle" class="button is-dark">
+                    <i id="themeToggleIcon" class="fa-solid fa-moon"></i> &nbsp; Toggle Theme
+                </button>
             </div>
         </div>
     </section>
