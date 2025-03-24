@@ -43,7 +43,7 @@ root
 ├── src/ 
 │ ├── css/style.css # Custom styles (Bulma override, theme, etc.) 
 │ ├── js/script.js # All JavaScript logic (rows, encode/decode, themes, etc.)
-│ ├── img/prewiew.png
+│ ├── img/preview.png
 │ └── img/logo.png # Project logo (used in footer) 
 └── README.md # This file
 ```
