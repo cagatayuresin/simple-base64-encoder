@@ -32,7 +32,8 @@ body.dark-mode {
 
 body.dark-mode textarea,
 body.dark-mode .input,
-body.dark-mode .button {
+body.dark-mode .button,
+body.dark-mode .footer {
   background-color: #1e1e1e;
   color: #e0e0e0;
   border-color: #333;
@@ -48,7 +49,9 @@ body.dark-mode ::placeholder {
 }
 
 body.dark-mode h1,
-body.dark-mode .title {
+body.dark-mode .title,
+body.dark-mode .strong,
+body.dark-mode .footer-icons a {
   color: #f0f0f0;
 }
 
