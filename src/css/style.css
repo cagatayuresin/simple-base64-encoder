@@ -15,6 +15,23 @@
   margin-right: 4px;
 }
 
+/* Delete button styling */
+.button.is-danger.is-outlined {
+  border-color: #ff3860;
+  color: #ff3860;
+}
+
+.button.is-danger.is-outlined:hover {
+  background-color: #ff3860;
+  color: white;
+}
+
+/* Row delete button specific */
+.column.is-narrow .button {
+  min-width: 40px;
+  padding: 0.5rem;
+}
+
 #github:hover {
   color: #333;
   filter: drop-shadow(0 0 1px #333);
@@ -52,6 +69,16 @@ body.dark-mode .footer {
 body.dark-mode .button.is-info {
   background-color: #3a3f44;
   border-color: #555;
+}
+
+body.dark-mode .button.is-danger.is-outlined {
+  border-color: #ff6b7d;
+  color: #ff6b7d;
+}
+
+body.dark-mode .button.is-danger.is-outlined:hover {
+  background-color: #ff6b7d;
+  color: #1e1e1e;
 }
 
 body.dark-mode ::placeholder {

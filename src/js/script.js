@@ -7,12 +7,15 @@ function autoResize(textarea) {
 // Save all row data to localStorage
 function saveToLocalStorage() {
   const data = [];
-  document.querySelectorAll("[id^=base64-]").forEach((base64El, i) => {
-    const plainEl = document.getElementById(`plain-${i}`);
-    data.push({
-      base64: base64El.value,
-      plain: plainEl.value,
-    });
+  document.querySelectorAll("[id^=row-]").forEach((rowEl) => {
+    const base64El = rowEl.querySelector("[id^=base64-]");
+    const plainEl = rowEl.querySelector("[id^=plain-]");
+    if (base64El && plainEl) {
+      data.push({
+        base64: base64El.value,
+        plain: plainEl.value,
+      });
+    }
   });
   localStorage.setItem("converterData", JSON.stringify(data));
 }
@@ -21,6 +24,31 @@ function saveToLocalStorage() {
 function createConverterRow(index, restoreData = null) {
   const row = document.createElement("div");
   row.className = "columns is-vcentered";
+  row.id = `row-${index}`;
+
+  // DELETE BUTTON COLUMN
+  const deleteCol = document.createElement("div");
+  deleteCol.className = "column is-narrow";
+  const deleteBtn = document.createElement("button");
+  deleteBtn.className = "button is-danger is-outlined";
+  deleteBtn.innerHTML = `<svg class="icon icon-tabler icon-tabler-trash" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M4 7l16 0"/>
+    <path d="M10 11l0 6"/>
+    <path d="M14 11l0 6"/>
+    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
+    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
+  </svg>`;
+  deleteBtn.title = "Delete this row";
+  deleteBtn.addEventListener("click", () => {
+    if (document.querySelectorAll("[id^=row-]").length > 1) {
+      row.remove();
+      saveToLocalStorage();
+    } else {
+      alert("At least one row must remain!");
+    }
+  });
+  deleteCol.appendChild(deleteBtn);
 
   // LEFT COL
   const leftCol = document.createElement("div");
@@ -154,6 +182,7 @@ function createConverterRow(index, restoreData = null) {
   rightField.appendChild(btnGroupRight);
   rightCol.appendChild(rightField);
 
+  row.appendChild(deleteCol);
   row.appendChild(leftCol);
   row.appendChild(rightCol);
 
@@ -173,27 +202,29 @@ function createConverterRow(index, restoreData = null) {
 let rowCount = 0;
 const converterRows = document.getElementById("converterRows");
 
+// Function to get next available row index
+function getNextRowIndex() {
+  return Date.now(); // Use timestamp to ensure unique IDs
+}
+
 // Load from localStorage if available
 const savedData = JSON.parse(localStorage.getItem("converterData") || "[]");
 if (savedData.length > 0) {
   savedData.forEach((data) => {
-    const row = createConverterRow(rowCount, data);
+    const row = createConverterRow(getNextRowIndex(), data);
     converterRows.appendChild(row);
-    rowCount++;
   });
 } else {
   for (let i = 0; i < 7; i++) {
-    const row = createConverterRow(rowCount);
+    const row = createConverterRow(getNextRowIndex());
     converterRows.appendChild(row);
-    rowCount++;
   }
 }
 
 // Add new row
 document.getElementById("addRowButton").addEventListener("click", () => {
-  const newRow = createConverterRow(rowCount);
+  const newRow = createConverterRow(getNextRowIndex());
   converterRows.appendChild(newRow);
-  rowCount++;
   saveToLocalStorage();
 });
 
@@ -202,11 +233,9 @@ document.getElementById("clearAllButton").addEventListener("click", () => {
   if (confirm("Are you sure you want to clear all rows?")) {
     localStorage.removeItem("converterData");
     converterRows.innerHTML = "";
-    rowCount = 0;
     for (let i = 0; i < 7; i++) {
-      const row = createConverterRow(rowCount);
+      const row = createConverterRow(getNextRowIndex());
       converterRows.appendChild(row);
-      rowCount++;
     }
   }
 });

@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CHANGELOG.md file to track project changes
 - Migration to Tabler Icons for better consistency and modern look
 - Tabler Icons styling and dark mode compatibility
+- **Row deletion feature** - Individual delete button for each row
+- Minimum row protection (at least one row must remain)
+- Dynamic row ID generation using timestamps
+- Enhanced row management with proper cleanup
 
 ### Changed
 
@@ -19,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated all icon references in HTML, CSS, and JavaScript
 - Improved icon styling with proper hover effects
 - Enhanced button icons with better alignment
+- **Row layout restructured** - Added delete button column at the beginning
+- Improved localStorage saving logic for dynamic row management
+- Enhanced row indexing system with unique timestamp-based IDs
 
 ### Deprecated
 
@@ -32,6 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Icon display consistency across different themes
 - Button icon alignment and spacing
+- Plus icon display issue (now shows proper + instead of pipe)
+- Row management and data persistence after deletions
 
 ### Security
 
