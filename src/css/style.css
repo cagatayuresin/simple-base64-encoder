@@ -5,14 +5,24 @@
   text-decoration: none;
 }
 
+/* Tabler Icons styling */
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.button .icon {
+  margin-right: 4px;
+}
+
 #github:hover {
   color: #333;
-  text-shadow: #333 0 0 1px;
+  filter: drop-shadow(0 0 1px #333);
 }
 
 #linkedin:hover {
   color: #0077b5;
-  text-shadow: #0077b5 0 0 1px;
+  filter: drop-shadow(0 0 1px #0077b5);
 }
 
 .textarea.single-line {
@@ -51,7 +61,8 @@ body.dark-mode ::placeholder {
 body.dark-mode h1,
 body.dark-mode .title,
 body.dark-mode .strong,
-body.dark-mode .footer-icons a {
+body.dark-mode .footer-icons a,
+body.dark-mode .icon {
   color: #f0f0f0;
 }
 

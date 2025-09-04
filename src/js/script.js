@@ -50,7 +50,13 @@ function createConverterRow(index, restoreData = null) {
 
   const copyBtnLeft = document.createElement("button");
   copyBtnLeft.className = "button is-info";
-  copyBtnLeft.innerHTML = '<i class="fa-solid fa-copy"></i>';
+  copyBtnLeft.innerHTML = `<svg class="icon icon-tabler icon-tabler-copy" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M8 8m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/>
+    <path d="M16 8m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/>
+    <path d="M9 15l6 0"/>
+    <path d="M12 12l3 0"/>
+  </svg>`;
   copyBtnLeft.addEventListener("click", () => {
     navigator.clipboard.writeText(base64Input.value).then(() => {
       copyBtnLeft.title = "Copied!";
@@ -62,7 +68,11 @@ function createConverterRow(index, restoreData = null) {
 
   const clearBtnLeft = document.createElement("button");
   clearBtnLeft.className = "button is-light";
-  clearBtnLeft.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+  clearBtnLeft.innerHTML = `<svg class="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M18 6l-12 12"/>
+    <path d="M6 6l12 12"/>
+  </svg>`;
   clearBtnLeft.addEventListener("click", () => {
     base64Input.value = "";
     plainInput.value = "";
@@ -106,7 +116,13 @@ function createConverterRow(index, restoreData = null) {
 
   const copyBtnRight = document.createElement("button");
   copyBtnRight.className = "button is-info";
-  copyBtnRight.innerHTML = '<i class="fa-solid fa-copy"></i>';
+  copyBtnRight.innerHTML = `<svg class="icon icon-tabler icon-tabler-copy" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M8 8m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/>
+    <path d="M16 8m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/>
+    <path d="M9 15l6 0"/>
+    <path d="M12 12l3 0"/>
+  </svg>`;
   copyBtnRight.addEventListener("click", () => {
     navigator.clipboard.writeText(plainInput.value).then(() => {
       copyBtnRight.title = "Copied!";
@@ -118,7 +134,11 @@ function createConverterRow(index, restoreData = null) {
 
   const clearBtnRight = document.createElement("button");
   clearBtnRight.className = "button is-light";
-  clearBtnRight.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+  clearBtnRight.innerHTML = `<svg class="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M18 6l-12 12"/>
+    <path d="M6 6l12 12"/>
+  </svg>`;
   clearBtnRight.addEventListener("click", () => {
     plainInput.value = "";
     base64Input.value = "";
@@ -197,9 +217,16 @@ const themeIcon = document.getElementById("themeToggleIcon");
 
 function updateThemeIcon() {
   if (document.body.classList.contains("dark-mode")) {
-    themeIcon.className = "fa-solid fa-sun";
+    themeIcon.innerHTML = `<svg class="icon icon-tabler icon-tabler-sun" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>
+      <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>
+    </svg>`;
   } else {
-    themeIcon.className = "fa-solid fa-moon";
+    themeIcon.innerHTML = `<svg class="icon icon-tabler icon-tabler-moon" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>
+    </svg>`;
   }
 }
 
