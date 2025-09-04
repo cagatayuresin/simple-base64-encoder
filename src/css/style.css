@@ -1,3 +1,203 @@
+/* Typography - Inter Font Family */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Logo Style Title */
+.main-title {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 2.5rem !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 2rem !important;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .main-title {
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00cec9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Enhanced Typography Hierarchy */
+.title:not(.main-title) {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+.subtitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+}
+
+.textarea, .input {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* Base dark theme styles */
+[data-theme="dark"] {
+  background-color: #1a1a1a !important;
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+}
+
+[data-theme="dark"] .box {
+  background-color: #2d2d2d !important;
+  border: 1px solid #404040 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .textarea {
+  background-color: #3a3a3a !important;
+  border-color: #555 !important;
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .textarea:focus {
+  border-color: #3273dc !important;
+  box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25) !important;
+}
+
+[data-theme="dark"] .button {
+  background-color: #404040 !important;
+  border-color: #555 !important;
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .button:hover {
+  background-color: #4a4a4a !important;
+  border-color: #666 !important;
+}
+
+[data-theme="dark"] .button.is-primary {
+  background-color: #3273dc !important;
+  border-color: #3273dc !important;
+  color: white !important;
+}
+
+[data-theme="dark"] .button.is-primary:hover {
+  background-color: #2366d1 !important;
+  border-color: #2366d1 !important;
+}
+
+[data-theme="dark"] .button.is-warning {
+  background-color: #ffdd57 !important;
+  color: #333 !important;
+}
+
+[data-theme="dark"] .button.is-warning:hover {
+  background-color: #ffd83d !important;
+}
+
+[data-theme="dark"] .button.is-danger {
+  background-color: #ff3860 !important;
+  border-color: #ff3860 !important;
+  color: white !important;
+}
+
+[data-theme="dark"] .button.is-danger:hover {
+  background-color: #ff1f4b !important;
+  border-color: #ff1f4b !important;
+}
+
+[data-theme="dark"] .footer {
+  background-color: #2d2d2d !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] .title,
+[data-theme="dark"] .subtitle,
+[data-theme="dark"] .strong,
+[data-theme="dark"] .footer-icons a,
+[data-theme="dark"] .icon {
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] ::placeholder {
+  color: #aaa !important;
+}
+
+/* Dark mode file upload and dropdown styles */
+[data-theme="dark"] .file.is-boxed {
+  background-color: #3a3a3a !important;
+  border-color: #555 !important;
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .file.is-boxed:hover,
+[data-theme="dark"] .file.is-boxed.is-active {
+  background-color: #4a4a4a !important;
+  border-color: #666 !important;
+}
+
+[data-theme="dark"] .file-name {
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .select select {
+  background-color: #3a3a3a !important;
+  border-color: #555 !important;
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .select select:hover {
+  border-color: #666 !important;
+}
+
+[data-theme="dark"] .select select:focus {
+  border-color: #3273dc !important;
+  box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25) !important;
+}
+
+[data-theme="dark"] .select:not(.is-multiple):not(.is-loading)::after {
+  border-color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .label {
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .tag {
+  background-color: #404040 !important;
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .tag.is-small {
+  background-color: #555 !important;
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .notification.is-light {
+  background-color: #2d2d2d !important;
+  color: #f0f0f0 !important;
+}
+
 /* Additional custom styles */
 .footer-icons a {
   margin: 0 10px;
@@ -126,32 +326,32 @@
 }
 
 /* Dark mode file upload */
-body.dark-mode .file.is-boxed {
+[data-theme="dark"] .file.is-boxed {
   background-color: #2b2b2b;
   border-color: #555;
 }
 
-body.dark-mode .file.is-boxed:hover,
-body.dark-mode .file.is-boxed.is-active {
+[data-theme="dark"] .file.is-boxed:hover,
+[data-theme="dark"] .file.is-boxed.is-active {
   border-color: #4a90e2;
   background-color: #3a3a3a;
 }
 
-body.dark-mode .file.is-boxed.is-active {
+[data-theme="dark"] .file.is-boxed.is-active {
   background-color: #1e3a5f;
 }
 
-body.dark-mode .char-count {
+[data-theme="dark"] .char-count {
   color: #aaa;
 }
 
-body.dark-mode .notification.is-light {
+[data-theme="dark"] .notification.is-light {
   background-color: #2b2b2b;
   border-color: #555;
   color: #e0e0e0;
 }
 
-body.dark-mode .tag.is-small {
+[data-theme="dark"] .tag.is-small {
   background-color: #4a4a4a;
   color: #e0e0e0;
 }
@@ -279,44 +479,44 @@ body.dark-mode .tag.is-small {
 }
 
 /* Dark mode file results */
-body.dark-mode .file-result-item {
+[data-theme="dark"] .file-result-item {
   background: #2b2b2b;
   border-color: #555;
 }
 
-body.dark-mode .file-result-item:hover {
+[data-theme="dark"] .file-result-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-body.dark-mode .file-result-header {
+[data-theme="dark"] .file-result-header {
   border-bottom-color: #555;
 }
 
-body.dark-mode .file-result-details h4 {
+[data-theme="dark"] .file-result-details h4 {
   color: #f0f0f0;
 }
 
-body.dark-mode .file-result-details p {
+[data-theme="dark"] .file-result-details p {
   color: #aaa;
 }
 
-body.dark-mode .file-result-textarea {
+[data-theme="dark"] .file-result-textarea {
   background: #1e1e1e;
   border-color: #555;
   color: #e0e0e0;
 }
 
-body.dark-mode .file-result-textarea:focus {
+[data-theme="dark"] .file-result-textarea:focus {
   border-color: #4a90e2;
   box-shadow: 0 0 0 0.125em rgba(74, 144, 226, 0.25);
 }
 
-body.dark-mode .file-result-stats {
+[data-theme="dark"] .file-result-stats {
   border-top-color: #555;
   color: #aaa;
 }
 
-body.dark-mode .file-result-format {
+[data-theme="dark"] .file-result-format {
   background: #1e3a5f;
   color: #64b5f6;
 }
@@ -364,22 +564,22 @@ body.dark-mode .file-result-format {
 }
 
 /* Dark mode notification styles */
-body.dark-mode .notification {
+[data-theme="dark"] .notification {
   background-color: #2b2b2b;
   color: #f0f0f0;
 }
 
-body.dark-mode .notification.is-danger {
+[data-theme="dark"] .notification.is-danger {
   background-color: #4a1e1e;
   color: #ff9999;
 }
 
-body.dark-mode .notification.is-success {
+[data-theme="dark"] .notification.is-success {
   background-color: #1e4a1e;
   color: #99ff99;
 }
 
-body.dark-mode .textarea.is-danger {
+[data-theme="dark"] .textarea.is-danger {
   border-color: #ff6b7d !important;
   box-shadow: 0 0 0 0.125em rgba(255, 107, 125, 0.25) !important;
 }
@@ -478,30 +678,30 @@ body.dark-mode .textarea.is-danger {
 }
 
 /* Dark mode modal styles */
-body.dark-mode .custom-modal-content {
+[data-theme="dark"] .custom-modal-content {
   background: #2b2b2b;
   color: #f0f0f0;
 }
 
-body.dark-mode .custom-modal-title {
+[data-theme="dark"] .custom-modal-title {
   color: #f0f0f0;
 }
 
-body.dark-mode .custom-modal-message {
+[data-theme="dark"] .custom-modal-message {
   color: #e0e0e0;
 }
 
-body.dark-mode .custom-modal-icon.is-warning {
+[data-theme="dark"] .custom-modal-icon.is-warning {
   background-color: #4a3728;
   color: #ffc107;
 }
 
-body.dark-mode .custom-modal-icon.is-danger {
+[data-theme="dark"] .custom-modal-icon.is-danger {
   background-color: #4a2c2c;
   color: #ff6b7d;
 }
 
-body.dark-mode .custom-modal-icon.is-info {
+[data-theme="dark"] .custom-modal-icon.is-info {
   background-color: #2c3e50;
   color: #3498db;
 }
@@ -549,54 +749,54 @@ body.dark-mode .custom-modal-icon.is-info {
 }
 
 /* Dark mode */
-body.dark-mode {
+[data-theme="dark"] {
   background-color: #121212;
   color: #e0e0e0;
 }
 
-body.dark-mode textarea,
-body.dark-mode .input,
-body.dark-mode .button,
-body.dark-mode .footer {
+[data-theme="dark"] textarea,
+[data-theme="dark"] .input,
+[data-theme="dark"] .button,
+[data-theme="dark"] .footer {
   background-color: #1e1e1e;
   color: #e0e0e0;
   border-color: #333;
 }
 
-body.dark-mode .button.is-info {
+[data-theme="dark"] .button.is-info {
   background-color: #3a3f44;
   border-color: #555;
 }
 
-body.dark-mode .field.has-addons .control.buttons .button {
+[data-theme="dark"] .field.has-addons .control.buttons .button {
   background-color: #3a3f44;
   border-color: #555;
   color: #e0e0e0;
 }
 
-body.dark-mode .field.has-addons .control.buttons .button:hover {
+[data-theme="dark"] .field.has-addons .control.buttons .button:hover {
   background-color: #4a5560;
 }
 
-body.dark-mode .button.is-danger.is-outlined {
+[data-theme="dark"] .button.is-danger.is-outlined {
   border-color: #ff6b7d;
   color: #ff6b7d;
 }
 
-body.dark-mode .button.is-danger.is-outlined:hover {
+[data-theme="dark"] .button.is-danger.is-outlined:hover {
   background-color: #ff6b7d;
   color: #1e1e1e;
 }
 
-body.dark-mode ::placeholder {
+[data-theme="dark"] ::placeholder {
   color: #aaa !important;
 }
 
-body.dark-mode h1,
-body.dark-mode .title,
-body.dark-mode .strong,
-body.dark-mode .footer-icons a,
-body.dark-mode .icon {
+[data-theme="dark"] h1,
+[data-theme="dark"] .title,
+[data-theme="dark"] .strong,
+[data-theme="dark"] .footer-icons a,
+[data-theme="dark"] .icon {
   color: #f0f0f0;
 }
 

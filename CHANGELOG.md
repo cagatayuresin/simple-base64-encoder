@@ -11,6 +11,13 @@ All notable changes to this project will be documented in this file.
 - CHANGELOG.md file to track project changes
 - Migration to Tabler Icons for better consistency and modern look
 - Tabler Icons styling and dark mode compatibility
+- **Modular JavaScript Architecture**
+  - Split monolithic script.js (1250 lines) into focused modules
+  - converters.js - Format conversion utilities
+  - fileHandler.js - File processing operations
+  - visualFeedback.js - UI feedback and notifications
+  - errorHandler.js - Error management and modals
+  - main.js - Core application logic and initialization
 - **Elegant File Upload Results System**
   - Beautiful file result cards with animated reveals
   - Individual copy buttons for each conversion result
@@ -109,6 +116,20 @@ All notable changes to this project will be documented in this file.
 - Plus icon display issue (now shows proper + instead of pipe)
 - CSS duplicate selector issues in file results styling
 - Copy and clear button alignment issues
+- **Modular JavaScript Integration Issues**
+  - Fixed theme toggle functionality after code splitting
+  - Corrected CSS selector mismatch (body.dark-mode → [data-theme="dark"])
+  - Fixed missing button ID references in main.js
+  - Resolved file processing functionality
+  - Updated HTML element ID mappings for modular scripts
+- **Dark Mode UI Issues**
+  - Fixed file upload component visibility in dark mode
+  - Corrected dropdown menu styling for dark theme
+  - Improved file name display readability
+  - Enhanced drag & drop area styling for dark mode
+- **Initial Setup Improvements**
+  - Restored 5 default converter rows on first load
+  - Better user experience with pre-populated workspace
 - **Critical Error Handling Issues**
   - Silent failures in Base64 encoding/decoding
   - Unhandled clipboard API failures

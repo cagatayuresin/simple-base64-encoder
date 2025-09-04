@@ -80,6 +80,17 @@
     }
     </script>
     
+    <!-- Google Fonts - Inter for modern, clean look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="src/img/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="src/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="src/img/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="src/img/apple-touch-icon.png">
+    
     <!-- Bulma CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
     <!-- Tabler Icons CDN -->
@@ -91,7 +102,7 @@
 <body>
     <section class="section">
         <div class="container">
-            <h1 class="title has-text-centered">Simple Base64 Encoder</h1>
+            <h1 class="title has-text-centered main-title">SIMPLE BASE64 ENCODER</h1>
             
             <!-- Format Selection Panel -->
             <div class="box" style="margin-bottom: 2rem;">
@@ -275,8 +286,12 @@
             </p>
         </div>
     </footer>
-    <!-- Custom JS -->
-    <script src="src/js/script.js"></script>
+    <!-- Custom JS Modules -->
+    <script src="src/js/converters.js"></script>
+    <script src="src/js/fileHandler.js"></script>
+    <script src="src/js/visualFeedback.js"></script>
+    <script src="src/js/errorHandler.js"></script>
+    <script src="src/js/main.js"></script>
 </body>
 
 </html>
