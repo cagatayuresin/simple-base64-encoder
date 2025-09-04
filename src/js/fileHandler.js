@@ -23,8 +23,8 @@ const FileHandler = {
         const arrayBuffer = e.target.result;
         const uint8Array = new Uint8Array(arrayBuffer);
         let binary = '';
-        for (let i = 0; i < uint8Array.length; i++) {
-          binary += String.fromCharCode(uint8Array[i]);
+        for (const byte of uint8Array) {
+          binary += String.fromCharCode(byte);
         }
         resolve(binary);
       };
@@ -38,13 +38,20 @@ const FileHandler = {
     const sizeInBytes = file.size;
     const sizeInKB = (sizeInBytes / 1024).toFixed(2);
     const sizeInMB = (sizeInBytes / (1024 * 1024)).toFixed(2);
+
+    let sizeFormatted;
+    if (sizeInBytes < 1024) {
+      sizeFormatted = `${sizeInBytes} B`;
+    } else if (sizeInBytes < 1024 * 1024) {
+      sizeFormatted = `${sizeInKB} KB`;
+    } else {
+      sizeFormatted = `${sizeInMB} MB`;
+    }
     
     return {
       name: file.name,
       size: sizeInBytes,
-      sizeFormatted: sizeInBytes < 1024 ? `${sizeInBytes} B` :
-                     sizeInBytes < 1024 * 1024 ? `${sizeInKB} KB` :
-                     `${sizeInMB} MB`,
+      sizeFormatted: sizeFormatted,
       type: file.type || 'Unknown',
       lastModified: new Date(file.lastModified).toLocaleString()
     };

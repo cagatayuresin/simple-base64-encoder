@@ -64,7 +64,7 @@ const VisualFeedback = {
     const count = text.length;
     const bytes = new Blob([text]).size;
     
-    if (!element.nextElementSibling || !element.nextElementSibling.classList.contains('char-count')) {
+    if (!element.nextElementSibling?.classList.contains('char-count')) {
       const countDiv = document.createElement('div');
       countDiv.className = 'char-count has-text-grey-light is-size-7';
       element.parentNode.insertBefore(countDiv, element.nextSibling);

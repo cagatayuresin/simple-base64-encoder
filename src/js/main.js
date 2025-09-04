@@ -158,10 +158,8 @@ function createConverterRow(index, restoreData = null) {
       await navigator.clipboard.writeText(content);
       ErrorHandler.showSuccess('Plain text copied to clipboard!');
     } catch (error) {
-      // Fallback for browsers without clipboard API
-      plainTextarea.select();
-      document.execCommand('copy');
-      ErrorHandler.showSuccess('Plain text copied to clipboard!');
+      console.error('Clipboard API failed:', error);
+      ErrorHandler.showError('Failed to copy plain text to clipboard. Your browser may not support this feature or requires HTTPS. Please copy manually.');
     }
   });
 
@@ -294,10 +292,8 @@ function createConverterRow(index, restoreData = null) {
       await navigator.clipboard.writeText(content);
       ErrorHandler.showSuccess(`${converter ? converter.name : 'Base64'} copied to clipboard!`);
     } catch (error) {
-      // Fallback for browsers without clipboard API
-      base64Textarea.select();
-      document.execCommand('copy');
-      ErrorHandler.showSuccess(`${converter ? converter.name : 'Base64'} copied to clipboard!`);
+      console.error('Clipboard API failed:', error);
+      ErrorHandler.showError('Failed to copy to clipboard. Your browser may not support this feature or requires HTTPS. Please copy manually.');
     }
   });
 
@@ -530,7 +526,8 @@ function addFileResult(file, originalContent, convertedContent, format) {
       
       ErrorHandler.showSuccess('Converted content copied to clipboard!');
     } catch (error) {
-      ErrorHandler.showError('Failed to copy to clipboard');
+      console.error('Copy to clipboard failed:', error);
+      ErrorHandler.showError(`Failed to copy to clipboard: ${error.message}`);
     }
   });
   

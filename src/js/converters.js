@@ -81,7 +81,8 @@ const FormatConverter = {
         const parsed = JSON.parse(input);
         return JSON.stringify(parsed, null, 2);
       } catch (e) {
-        throw new Error('Invalid JSON format');
+        console.error('JSON parsing error:', e.message);
+        throw new Error('Invalid JSON format: ' + e.message);
       }
     },
     decode: (input) => {
@@ -89,7 +90,8 @@ const FormatConverter = {
         const parsed = JSON.parse(input);
         return JSON.stringify(parsed);
       } catch (e) {
-        throw new Error('Invalid JSON format');
+        console.error('JSON parsing error:', e.message);
+        throw new Error('Invalid JSON format: ' + e.message);
       }
     },
     name: 'JSON Formatter'

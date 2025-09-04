@@ -160,6 +160,7 @@ const ErrorHandler = {
       atob(str);
       return true;
     } catch (e) {
+      console.error('Base64 validation failed:', e);
       return false;
     }
   },
