@@ -3,38 +3,83 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <!-- Primary Meta Tags -->
-    <title>Simple Base64 Encoder - Encode & Decode Instantly</title>
-    <meta name="title" content="Simple Base64 Encoder - Encode & Decode Instantly" />
+    <title>Simple Base64 Encoder - Multiple Format Converter with File Support</title>
+    <meta name="title" content="Simple Base64 Encoder - Multiple Format Converter with File Support" />
     <meta name="description"
-        content="A clean, modern tool to quickly encode and decode Base64 text. Supports multiple rows, dark mode, copy/clear features, and auto-save. Built by Çağatay Üresin." />
+        content="Professional Base64 encoder/decoder with multi-format support (URL-Safe, Hex, Binary, JSON). Drag & drop file upload, binary file support, dark mode, and real-time conversion. Built by Çağatay Üresin." />
+    <meta name="keywords"
+        content="Base64 encoder, Base64 decoder, URL-Safe Base64, Hex converter, Binary converter, JSON formatter, file encoder, drag drop upload, binary files, image encoder, developer tools, web converter, Çağatay Üresin" />
+    <meta name="author" content="Çağatay URESIN" />
+    <meta name="contact" content="cagatayuresin@gmail.com" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="rating" content="general" />
+    <meta name="theme-color" content="#3273dc" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://cagatayuresin.github.io/simple-base64-encoder/" />
-    <!-- Replace with your actual URL -->
-    <meta property="og:title" content="Simple Base64 Encoder - Encode & Decode Instantly" />
+    <meta property="og:title" content="Simple Base64 Encoder - Multiple Format Converter" />
     <meta property="og:description"
-        content="A clean, modern Base64 encoder/decoder with dark mode, auto-save, and smart textarea resizing. Built for developers." />
+        content="Professional multi-format converter supporting Base64, URL-Safe Base64, Hex, Binary, and JSON. Features file upload, binary support, and beautiful dark mode interface." />
     <meta property="og:image" content="https://cagatayuresin.github.io/simple-base64-encoder/src/img/preview.png" />
-    <!-- Ideal: 1200x630 image -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Simple Base64 Encoder" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://cagatayuresin.github.io/simple-base64-encoder/" />
-    <meta property="twitter:title" content="Simple Base64 Encoder - Encode & Decode Instantly" />
+    <meta property="twitter:title" content="Simple Base64 Encoder - Multiple Format Converter" />
     <meta property="twitter:description"
-        content="A developer-focused Base64 converter with clean UI, multiple rows, auto save, and dark mode. Try it now!" />
+        content="🚀 Professional Base64 & multi-format converter with file upload support. Features: drag & drop, binary files, JSON formatter, dark mode. Try it now!" />
     <meta property="twitter:image"
         content="https://cagatayuresin.github.io/simple-base64-encoder/src/img/preview.png" />
+    <meta property="twitter:creator" content="@cagatayuresin" />
 
-    <!-- Canonical & SEO keywords -->
+    <!-- Canonical & Additional SEO -->
     <link rel="canonical" href="https://cagatayuresin.github.io/simple-base64-encoder/" />
-    <meta name="keywords"
-        content="Base64 encoder, Base64 decoder, JavaScript tool, web dev, encode string, decode text, Çağatay Üresin" />
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="Çağatay Üresin" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="application-name" content="Simple Base64 Encoder" />
+    <meta name="apple-mobile-web-app-title" content="Base64 Encoder" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Simple Base64 Encoder",
+        "description": "Professional Base64 encoder/decoder with multi-format support including URL-Safe Base64, Hex, Binary, and JSON formatting. Features file upload and binary file support.",
+        "url": "https://cagatayuresin.github.io/simple-base64-encoder/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "permissions": "clipboard-read, clipboard-write",
+        "author": {
+            "@type": "Person",
+            "name": "Çağatay ÜRESİN",
+            "email": "cagatayuresin@gmail.com",
+            "url": "https://cagatayuresin.com"
+        },
+        "featureList": [
+            "Base64 Encoding/Decoding",
+            "URL-Safe Base64 Support", 
+            "Hexadecimal Conversion",
+            "Binary Representation",
+            "JSON Formatting",
+            "File Upload Support",
+            "Binary File Processing",
+            "Drag & Drop Interface",
+            "Dark Mode Support",
+            "Real-time Conversion"
+        ]
+    }
+    </script>
+    
     <!-- Bulma CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
     <!-- Tabler Icons CDN -->
@@ -47,6 +92,113 @@
     <section class="section">
         <div class="container">
             <h1 class="title has-text-centered">Simple Base64 Encoder</h1>
+            
+            <!-- Format Selection Panel -->
+            <div class="box" style="margin-bottom: 2rem;">
+                <h2 class="subtitle has-text-centered">Format & Tools</h2>
+                <div class="columns is-multiline">
+                    <!-- File Upload -->
+                    <div class="column is-6">
+                        <div class="field">
+                            <label class="label" for="fileInput">File Upload</label>
+                            <div class="file is-boxed has-name is-fullwidth" id="fileUploadArea">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" id="fileInput" multiple>
+                                    <span class="file-cta">
+                                        <span class="file-icon">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+                                                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
+                                                <path d="M12 17v-6"/>
+                                                <path d="M9.5 14.5l2.5 -2.5l2.5 2.5"/>
+                                            </svg>
+                                        </span>
+                                        <span class="file-label">Choose files or drag here...</span>
+                                    </span>
+                                    <span class="file-name" id="fileName">No file selected</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Format Selector -->
+                    <div class="column is-6">
+                        <div class="field">
+                            <label class="label" for="formatSelector">Conversion Format</label>
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select id="formatSelector">
+                                        <option value="base64">Standard Base64</option>
+                                        <option value="base64url">URL-Safe Base64</option>
+                                        <option value="hex">Hexadecimal</option>
+                                        <option value="binary">Binary</option>
+                                        <option value="url">URL Encoding</option>
+                                        <option value="json">JSON Formatter</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visual Feedback Section -->
+                <div class="columns">
+                    <div class="column">
+                        <div id="processingInfo" class="notification is-info is-hidden">
+                            <div class="level">
+                                <div class="level-left">
+                                    <div class="level-item">
+                                        <span id="processingText">Processing...</span>
+                                    </div>
+                                </div>
+                                <div class="level-right">
+                                    <div class="level-item">
+                                        <progress class="progress is-small is-info" id="progressBar" style="width: 200px;"></progress>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="fileInfo" class="notification is-light is-hidden">
+                            <div class="content">
+                                <p><strong>File Details:</strong></p>
+                                <ul id="fileDetails"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Results Section -->
+            <div id="fileResults" class="box is-hidden" style="margin-bottom: 2rem;">
+                <h3 class="subtitle">
+                    <span class="icon-text">
+                        <span class="icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M9 12l2 2l4 -4"/>
+                                <path d="M21 12c-1 0 -3 1 -3 3s2 3 3 3s3 -1 3 -3s-2 -3 -3 -3"/>
+                                <path d="M10 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0"/>
+                                <path d="M7 12h3m4 0h7"/>
+                            </svg>
+                        </span>
+                        <span>Conversion Results</span>
+                    </span>
+                    <button class="button is-small is-pulled-right" id="clearResults">
+                        <span class="icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M18 6l-12 12"/>
+                                <path d="M6 6l12 12"/>
+                            </svg>
+                        </span>
+                        <span>Clear</span>
+                    </button>
+                </h3>
+                <div id="fileResultsContainer"></div>
+            </div>
+
             <!-- Converter rows container -->
             <div id="converterRows"></div>
             <!-- Add row button -->
@@ -108,6 +260,18 @@
                 <strong class="strong">Simple Base64 Encoder</strong> by
                 <a href="https://cagatayuresin.com" target="_blank">Çağatay Üresin</a>. The source code is licensed
                 <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>.
+            </p>
+            <p class="footer-text small" style="margin-top: 0.5rem; opacity: 0.7;">
+                <span class="icon-text">
+                    <span class="icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/>
+                            <path d="M12 7v5l3 3"/>
+                        </svg>
+                    </span>
+                    <span>Version 2.0.0</span>
+                </span>
             </p>
         </div>
     </footer>

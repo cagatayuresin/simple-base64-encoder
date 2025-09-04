@@ -1,11 +1,11 @@
-# Simple Base64 Converter 🚀
+# Simple Base64 Encoder 🚀
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Active-green)](https://cagatayuresin.github.io/simple-base64-encoder/)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 🔗 **Live Demo:** [https://cagatayuresin.github.io/simple-base64-encoder/](https://cagatayuresin.github.io/simple-base64-encoder/)
 
-Welcome to the **Simple Base64 Converter**, a sleek, feature-rich tool to encode and decode text using Base64.  
+Welcome to the **Simple Base64 Encoder**, a sleek, feature-rich tool to encode and decode text using Base64.  
 Built with **HTML**, **JavaScript**, and **Bulma CSS**, this app focuses on clean UI/UX and real developer needs.  
 
 ---

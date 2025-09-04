@@ -1,3 +1,222 @@
+// Format converter utilities
+const FormatConverter = {
+  // Standard Base64
+  base64: {
+    encode: (input) => btoa(input),
+    decode: (input) => atob(input),
+    name: 'Base64'
+  },
+  
+  // URL-Safe Base64
+  base64url: {
+    encode: (input) => {
+      return btoa(input)
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=/g, '');
+    },
+    decode: (input) => {
+      // Add padding back
+      let padded = input;
+      while (padded.length % 4) {
+        padded += '=';
+      }
+      // Replace URL-safe characters
+      padded = padded.replace(/-/g, '+').replace(/_/g, '/');
+      return atob(padded);
+    },
+    name: 'URL-Safe Base64'
+  },
+  
+  // Hexadecimal
+  hex: {
+    encode: (input) => {
+      return Array.from(input)
+        .map(char => char.charCodeAt(0).toString(16).padStart(2, '0'))
+        .join('');
+    },
+    decode: (input) => {
+      if (input.length % 2 !== 0) {
+        throw new Error('Invalid hex string length');
+      }
+      return input.match(/.{2}/g)
+        .map(hex => String.fromCharCode(parseInt(hex, 16)))
+        .join('');
+    },
+    name: 'Hexadecimal'
+  },
+  
+  // Binary
+  binary: {
+    encode: (input) => {
+      return Array.from(input)
+        .map(char => char.charCodeAt(0).toString(2).padStart(8, '0'))
+        .join(' ');
+    },
+    decode: (input) => {
+      return input.split(' ')
+        .filter(bin => bin.length > 0)
+        .map(bin => String.fromCharCode(parseInt(bin, 2)))
+        .join('');
+    },
+    name: 'Binary'
+  },
+  
+  // URL Encoding
+  url: {
+    encode: (input) => encodeURIComponent(input),
+    decode: (input) => decodeURIComponent(input),
+    name: 'URL Encoding'
+  },
+  
+  // JSON Formatter
+  json: {
+    encode: (input) => {
+      try {
+        const parsed = JSON.parse(input);
+        return JSON.stringify(parsed, null, 2);
+      } catch (e) {
+        throw new Error('Invalid JSON format');
+      }
+    },
+    decode: (input) => {
+      try {
+        const parsed = JSON.parse(input);
+        return JSON.stringify(parsed);
+      } catch (e) {
+        throw new Error('Invalid JSON format');
+      }
+    },
+    name: 'JSON Formatter'
+  }
+};
+
+// File handling utilities
+const FileHandler = {
+  // Read file as text
+  readAsText: (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target.result);
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.readAsText(file);
+    });
+  },
+  
+  // Read file as binary (for images, etc.)
+  readAsBinary: (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const arrayBuffer = e.target.result;
+        const uint8Array = new Uint8Array(arrayBuffer);
+        let binary = '';
+        for (let i = 0; i < uint8Array.length; i++) {
+          binary += String.fromCharCode(uint8Array[i]);
+        }
+        resolve(binary);
+      };
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.readAsArrayBuffer(file);
+    });
+  },
+  
+  // Get file info
+  getFileInfo: (file) => {
+    const sizeInBytes = file.size;
+    const sizeInKB = (sizeInBytes / 1024).toFixed(2);
+    const sizeInMB = (sizeInBytes / (1024 * 1024)).toFixed(2);
+    
+    return {
+      name: file.name,
+      size: sizeInBytes,
+      sizeFormatted: sizeInBytes < 1024 ? `${sizeInBytes} B` :
+                     sizeInBytes < 1024 * 1024 ? `${sizeInKB} KB` :
+                     `${sizeInMB} MB`,
+      type: file.type || 'Unknown',
+      lastModified: new Date(file.lastModified).toLocaleString()
+    };
+  },
+  
+  // Check if file is binary
+  isBinaryFile: (file) => {
+    const textTypes = ['text/', 'application/json', 'application/xml', 'application/javascript'];
+    return !textTypes.some(type => file.type.startsWith(type));
+  }
+};
+
+// Visual feedback utilities
+const VisualFeedback = {
+  // Show processing notification
+  showProcessing: (message = 'Processing...') => {
+    const info = document.getElementById('processingInfo');
+    const text = document.getElementById('processingText');
+    const progress = document.getElementById('progressBar');
+    
+    text.textContent = message;
+    progress.removeAttribute('value');
+    info.classList.remove('is-hidden');
+  },
+  
+  // Update progress
+  updateProgress: (percent, message) => {
+    const text = document.getElementById('processingText');
+    const progress = document.getElementById('progressBar');
+    
+    if (message) text.textContent = message;
+    progress.value = percent;
+    progress.max = 100;
+  },
+  
+  // Hide processing
+  hideProcessing: () => {
+    const info = document.getElementById('processingInfo');
+    info.classList.add('is-hidden');
+  },
+  
+  // Show file info
+  showFileInfo: (files) => {
+    const fileInfo = document.getElementById('fileInfo');
+    const fileDetails = document.getElementById('fileDetails');
+    
+    fileDetails.innerHTML = '';
+    
+    files.forEach(file => {
+      const info = FileHandler.getFileInfo(file);
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <strong>${info.name}</strong> - ${info.sizeFormatted} 
+        <span class="tag is-small">${info.type}</span>
+        <br><small>Modified: ${info.lastModified}</small>
+      `;
+      fileDetails.appendChild(li);
+    });
+    
+    fileInfo.classList.remove('is-hidden');
+  },
+  
+  // Hide file info
+  hideFileInfo: () => {
+    const fileInfo = document.getElementById('fileInfo');
+    fileInfo.classList.add('is-hidden');
+  },
+  
+  // Show character count
+  showCharCount: (element, text) => {
+    const count = text.length;
+    const bytes = new Blob([text]).size;
+    
+    if (!element.nextElementSibling || !element.nextElementSibling.classList.contains('char-count')) {
+      const countDiv = document.createElement('div');
+      countDiv.className = 'char-count has-text-grey-light is-size-7';
+      element.parentNode.insertBefore(countDiv, element.nextSibling);
+    }
+    
+    const countDiv = element.nextElementSibling;
+    countDiv.textContent = `${count} chars, ${bytes} bytes`;
+  }
+};
+
 // Error handling utilities
 const ErrorHandler = {
   // Show error notification
@@ -314,9 +533,19 @@ function createConverterRow(index, restoreData = null) {
       return;
     }
     
+    // Get selected format
+    const formatSelector = document.getElementById('formatSelector');
+    const selectedFormat = formatSelector ? formatSelector.value : 'base64';
+    const converter = FormatConverter[selectedFormat];
+    
     try {
-      plainInput.value = ErrorHandler.safeDecode(base64Input.value);
+      plainInput.value = converter.decode(base64Input.value);
       autoResize(plainInput);
+      
+      // Show character count
+      VisualFeedback.showCharCount(base64Input, base64Input.value);
+      VisualFeedback.showCharCount(plainInput, plainInput.value);
+      
     } catch (error) {
       plainInput.value = '';
       base64Input.classList.add('is-danger');
@@ -325,8 +554,8 @@ function createConverterRow(index, restoreData = null) {
       // Don't show error for every character typed, only when user pauses
       clearTimeout(base64Input.errorTimeout);
       base64Input.errorTimeout = setTimeout(() => {
-        if (base64Input.value.trim() !== '' && !ErrorHandler.isValidBase64(base64Input.value)) {
-          ErrorHandler.showError('Invalid Base64 format. Please check your input.');
+        if (base64Input.value.trim() !== '') {
+          ErrorHandler.showError(`Invalid ${converter.name} format: ${error.message}`);
         }
       }, 1000);
     }
@@ -421,16 +650,26 @@ function createConverterRow(index, restoreData = null) {
       return;
     }
     
+    // Get selected format
+    const formatSelector = document.getElementById('formatSelector');
+    const selectedFormat = formatSelector ? formatSelector.value : 'base64';
+    const converter = FormatConverter[selectedFormat];
+    
     try {
-      base64Input.value = ErrorHandler.safeEncode(plainInput.value);
+      base64Input.value = converter.encode(plainInput.value);
       autoResize(base64Input);
+      
+      // Show character count
+      VisualFeedback.showCharCount(plainInput, plainInput.value);
+      VisualFeedback.showCharCount(base64Input, base64Input.value);
+      
     } catch (error) {
       base64Input.value = '';
       plainInput.classList.add('is-danger');
       plainInput.title = error.message;
       
       // Show error for encoding issues
-      ErrorHandler.showError('Cannot encode text: ' + error.message);
+      ErrorHandler.showError(`Cannot encode to ${converter.name}: ${error.message}`);
     }
     
     saveToLocalStorage();
@@ -691,6 +930,12 @@ window.addEventListener('unhandledrejection', (event) => {
 
 // Check browser compatibility on load
 document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize file upload functionality
+  initializeFileUpload();
+  
+  // Initialize format selector
+  initializeFormatSelector();
+  
   // Check for required APIs
   const missingFeatures = [];
   
@@ -724,3 +969,283 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 });
+
+// Initialize file upload functionality
+function initializeFileUpload() {
+  const fileInput = document.getElementById('fileInput');
+  const fileUploadArea = document.getElementById('fileUploadArea');
+  const fileName = document.getElementById('fileName');
+  
+  // File input change handler
+  fileInput.addEventListener('change', handleFileSelection);
+  
+  // Drag and drop handlers
+  fileUploadArea.addEventListener('dragover', handleDragOver);
+  fileUploadArea.addEventListener('dragleave', handleDragLeave);
+  fileUploadArea.addEventListener('drop', handleFileDrop);
+}
+
+// Handle file selection
+async function handleFileSelection(event) {
+  const files = Array.from(event.target.files);
+  if (files.length === 0) return;
+  
+  await processFiles(files);
+}
+
+// Handle drag over
+function handleDragOver(event) {
+  event.preventDefault();
+  event.currentTarget.classList.add('is-active');
+}
+
+// Handle drag leave
+function handleDragLeave(event) {
+  event.preventDefault();
+  event.currentTarget.classList.remove('is-active');
+}
+
+// Handle file drop
+async function handleFileDrop(event) {
+  event.preventDefault();
+  event.currentTarget.classList.remove('is-active');
+  
+  const files = Array.from(event.dataTransfer.files);
+  if (files.length === 0) return;
+  
+  await processFiles(files);
+}
+
+// Process uploaded files
+async function processFiles(files) {
+  try {
+    VisualFeedback.showProcessing('Reading files...');
+    VisualFeedback.showFileInfo(files);
+    
+    const formatSelector = document.getElementById('formatSelector');
+    const selectedFormat = formatSelector.value;
+    const converter = FormatConverter[selectedFormat];
+    
+    // Clear previous results
+    clearFileResults();
+    
+    // Show results section
+    const fileResults = document.getElementById('fileResults');
+    fileResults.classList.remove('is-hidden');
+    
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      VisualFeedback.updateProgress((i / files.length) * 100, `Processing ${file.name}...`);
+      
+      try {
+        let content;
+        if (FileHandler.isBinaryFile(file)) {
+          content = await FileHandler.readAsBinary(file);
+        } else {
+          content = await FileHandler.readAsText(file);
+        }
+        
+        // Convert content based on selected format
+        try {
+          const convertedContent = converter.encode(content);
+          addFileResult(file, content, convertedContent, selectedFormat);
+        } catch (error) {
+          ErrorHandler.showError(`Failed to convert ${file.name}: ${error.message}`);
+        }
+        
+      } catch (error) {
+        ErrorHandler.showError(`Failed to read ${file.name}: ${error.message}`);
+      }
+    }
+    
+    VisualFeedback.hideProcessing();
+    ErrorHandler.showSuccess(`Successfully processed ${files.length} file(s)!`);
+    
+    // Update file name display
+    const fileName = document.getElementById('fileName');
+    if (files.length === 1) {
+      fileName.textContent = files[0].name;
+    } else {
+      fileName.textContent = `${files.length} files selected`;
+    }
+    
+  } catch (error) {
+    VisualFeedback.hideProcessing();
+    ErrorHandler.showError('Failed to process files: ' + error.message);
+  }
+}
+
+// Add file result to results container
+function addFileResult(file, originalContent, convertedContent, format) {
+  const fileResultsContainer = document.getElementById('fileResultsContainer');
+  const fileInfo = FileHandler.getFileInfo(file);
+  const converter = FormatConverter[format];
+  
+  const resultItem = document.createElement('div');
+  resultItem.className = 'file-result-item';
+  
+  // Get file type icon
+  const fileIcon = getFileTypeIcon(file.type);
+  
+  resultItem.innerHTML = `
+    <div class="file-result-header">
+      <div class="file-result-info">
+        <div class="file-result-icon">
+          ${fileIcon}
+        </div>
+        <div class="file-result-details">
+          <h4>${fileInfo.name}</h4>
+          <p>${fileInfo.sizeFormatted} • ${fileInfo.type}</p>
+        </div>
+        <div class="file-result-format">
+          <svg width="12" height="12" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M9 12l2 2l4 -4"/>
+            <circle cx="12" cy="12" r="9"/>
+          </svg>
+          ${converter.name}
+        </div>
+      </div>
+      <div class="file-result-actions">
+        <button class="button is-small is-info copy-result" data-content="${convertedContent}">
+          <span class="icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M8 8m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/>
+              <path d="M16 8m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/>
+              <path d="M9 15l6 0"/>
+              <path d="M12 12l3 0"/>
+            </svg>
+          </span>
+          <span>Copy</span>
+        </button>
+        <button class="button is-small is-light remove-result">
+          <span class="icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M18 6l-12 12"/>
+              <path d="M6 6l12 12"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="file-result-output">
+      <textarea class="file-result-textarea" readonly>${convertedContent}</textarea>
+      <div class="file-result-stats">
+        <span>Original: ${originalContent.length} chars</span>
+        <span>Converted: ${convertedContent.length} chars</span>
+        <span>${new Blob([convertedContent]).size} bytes</span>
+      </div>
+    </div>
+  `;
+  
+  fileResultsContainer.appendChild(resultItem);
+  
+  // Add event listeners
+  const copyBtn = resultItem.querySelector('.copy-result');
+  const removeBtn = resultItem.querySelector('.remove-result');
+  
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(convertedContent);
+      copyBtn.classList.add('is-success');
+      copyBtn.querySelector('span:last-child').textContent = 'Copied!';
+      
+      setTimeout(() => {
+        copyBtn.classList.remove('is-success');
+        copyBtn.querySelector('span:last-child').textContent = 'Copy';
+      }, 2000);
+      
+      ErrorHandler.showSuccess('Converted content copied to clipboard!');
+    } catch (error) {
+      ErrorHandler.showError('Failed to copy to clipboard');
+    }
+  });
+  
+  removeBtn.addEventListener('click', () => {
+    resultItem.remove();
+    
+    // Hide results section if no more results
+    if (fileResultsContainer.children.length === 0) {
+      document.getElementById('fileResults').classList.add('is-hidden');
+    }
+  });
+}
+
+// Get file type icon
+function getFileTypeIcon(mimeType) {
+  if (mimeType.startsWith('image/')) {
+    return `<svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M15 8h.01"/>
+      <rect x="4" y="4" width="16" height="16" rx="3"/>
+      <path d="M4 15l4 -4a3 5 0 0 1 3 0l5 5"/>
+      <path d="M14 14l1 -1a3 5 0 0 1 3 0l2 2"/>
+    </svg>`;
+  } else if (mimeType.startsWith('text/') || mimeType.includes('json')) {
+    return `<svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+      <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
+      <path d="M9 9l1 0"/>
+      <path d="M9 13l6 0"/>
+      <path d="M9 17l6 0"/>
+    </svg>`;
+  } else {
+    return `<svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+      <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
+    </svg>`;
+  }
+}
+
+// Clear file results
+function clearFileResults() {
+  const fileResultsContainer = document.getElementById('fileResultsContainer');
+  fileResultsContainer.innerHTML = '';
+  
+  const fileResults = document.getElementById('fileResults');
+  fileResults.classList.add('is-hidden');
+}
+
+// Initialize clear results button
+document.addEventListener('DOMContentLoaded', () => {
+  const clearResultsBtn = document.getElementById('clearResults');
+  if (clearResultsBtn) {
+    clearResultsBtn.addEventListener('click', clearFileResults);
+  }
+});
+
+// Initialize format selector
+function initializeFormatSelector() {
+  const formatSelector = document.getElementById('formatSelector');
+  
+  formatSelector.addEventListener('change', (event) => {
+    const selectedFormat = event.target.value;
+    const converter = FormatConverter[selectedFormat];
+    
+    if (converter) {
+      ErrorHandler.showSuccess(`Switched to ${converter.name} format`);
+      
+      // Update placeholders in existing rows
+      updateRowPlaceholders(selectedFormat);
+    }
+  });
+}
+
+// Update placeholders based on selected format
+function updateRowPlaceholders(format) {
+  const converter = FormatConverter[format];
+  const base64Inputs = document.querySelectorAll('[id^="base64-"]');
+  const plainInputs = document.querySelectorAll('[id^="plain-"]');
+  
+  base64Inputs.forEach(input => {
+    input.placeholder = converter.name;
+  });
+  
+  plainInputs.forEach(input => {
+    input.placeholder = 'Plain text';
+  });
+}

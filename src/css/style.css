@@ -76,6 +76,263 @@
 /* Fix for textarea alignment */
 /* Removed duplicate - styles moved to existing .textarea.single-line rule above */
 
+/* File upload styles */
+.file.is-boxed {
+  transition: all 0.3s ease;
+}
+
+.file.is-boxed:hover,
+.file.is-boxed.is-active {
+  border-color: #3273dc;
+  background-color: #f5f5f5;
+}
+
+.file.is-boxed.is-active {
+  border-style: dashed;
+  background-color: #e8f4fd;
+}
+
+/* Character count styling */
+.char-count {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: #999;
+}
+
+/* Progress bar improvements */
+.progress.is-small {
+  height: 0.75rem;
+}
+
+/* Visual feedback notifications */
+.notification {
+  border-radius: 8px;
+}
+
+.notification.is-light {
+  background-color: #fafafa;
+  border: 1px solid #e1e1e1;
+}
+
+/* Format selector styling */
+.select.is-fullwidth select {
+  width: 100%;
+}
+
+/* File info styling */
+.tag.is-small {
+  font-size: 0.65rem;
+  margin-left: 0.5rem;
+}
+
+/* Dark mode file upload */
+body.dark-mode .file.is-boxed {
+  background-color: #2b2b2b;
+  border-color: #555;
+}
+
+body.dark-mode .file.is-boxed:hover,
+body.dark-mode .file.is-boxed.is-active {
+  border-color: #4a90e2;
+  background-color: #3a3a3a;
+}
+
+body.dark-mode .file.is-boxed.is-active {
+  background-color: #1e3a5f;
+}
+
+body.dark-mode .char-count {
+  color: #aaa;
+}
+
+body.dark-mode .notification.is-light {
+  background-color: #2b2b2b;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .tag.is-small {
+  background-color: #4a4a4a;
+  color: #e0e0e0;
+}
+
+/* Success animation */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* File Results Styling - Combined with animation */
+.file-result-item {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  animation: slideInUp 0.3s ease-out;
+}
+
+.file-result-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.file-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.file-result-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.file-result-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.file-result-details h4 {
+  margin: 0;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+.file-result-details p {
+  margin: 0.25rem 0 0 0;
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.file-result-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.file-result-output {
+  position: relative;
+}
+
+.file-result-textarea {
+  width: 100%;
+  min-height: 120px;
+  max-height: 300px;
+  resize: vertical;
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  overflow-y: auto;
+  word-break: break-all;
+}
+
+.file-result-textarea:focus {
+  outline: none;
+  border-color: #3273dc;
+  box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
+}
+
+.file-result-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e9ecef;
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.file-result-format {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+/* Dark mode file results */
+body.dark-mode .file-result-item {
+  background: #2b2b2b;
+  border-color: #555;
+}
+
+body.dark-mode .file-result-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .file-result-header {
+  border-bottom-color: #555;
+}
+
+body.dark-mode .file-result-details h4 {
+  color: #f0f0f0;
+}
+
+body.dark-mode .file-result-details p {
+  color: #aaa;
+}
+
+body.dark-mode .file-result-textarea {
+  background: #1e1e1e;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .file-result-textarea:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 0.125em rgba(74, 144, 226, 0.25);
+}
+
+body.dark-mode .file-result-stats {
+  border-top-color: #555;
+  color: #aaa;
+}
+
+body.dark-mode .file-result-format {
+  background: #1e3a5f;
+  color: #64b5f6;
+}
+
+/* Success animation */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Error handling styles */
 .error-notification,
 .success-notification {

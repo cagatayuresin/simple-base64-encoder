@@ -2,16 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
+
+## [2.0.0] - 2025-09-04
 
 ### Added
 
 - CHANGELOG.md file to track project changes
 - Migration to Tabler Icons for better consistency and modern look
 - Tabler Icons styling and dark mode compatibility
+- **Elegant File Upload Results System**
+  - Beautiful file result cards with animated reveals
+  - Individual copy buttons for each conversion result
+  - File type icons and size information display
+  - Remove individual results functionality
+  - Read-only textareas for converted content
+  - Conversion statistics (original vs converted size)
+  - Format-specific result display
+  - Dark mode compatible styling with gradients
 - **Comprehensive Error Handling System**
   - Real-time error notifications with auto-dismiss
   - Success notifications for user feedback
@@ -37,18 +45,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Keyboard navigation support (ESC to close)
   - Backdrop click to dismiss
   - Smooth animations and transitions
+- **Advanced File Support**
+  - Binary file support (images, documents, etc.)
+  - Drag & drop file upload interface
+  - Multiple file processing
+  - File type detection and validation
+  - File size and metadata display
+- **Multiple Format Support**
+  - Standard Base64 encoding/decoding
+  - URL-Safe Base64 support
+  - Hexadecimal conversion
+  - Binary representation
+  - URL encoding/decoding
+  - JSON formatter with validation
+- **Enhanced Visual Feedback**
+  - Real-time progress bars for file processing
+  - Character and byte counters
+  - Processing status notifications
+  - File information display
+  - Visual drag & drop indicators
 
 ### Changed
 
+- Project name updated from "Advanced Base64 Converter" to "Simple Base64 Encoder"
+- Updated branding throughout HTML, README, and documentation
 - Replaced FontAwesome icons with Tabler Icons throughout the application
 - **Complete Error Handling Overhaul**
   - All encoding/decoding operations now use safe wrapper functions
   - LocalStorage operations wrapped with try-catch blocks
   - Copy operations enhanced with comprehensive error handling
+- **Refined File Upload Experience**
+  - Files no longer create editable plaintext rows
+  - Direct conversion to beautiful result cards
+  - Streamlined workflow for file processing
+  - Focus on output presentation rather than editing
 - **Improved User Experience**
   - Non-blocking error messages that don't interrupt workflow
   - Visual feedback for all user actions
   - Better handling of edge cases and invalid input
+  - Button alignment fixes for consistent UI
 - **Enhanced Data Persistence**
   - Validation of saved data structure on load
   - Automatic recovery from corrupted localStorage data
@@ -72,6 +107,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Icon display consistency across different themes
 - Button icon alignment and spacing
 - Plus icon display issue (now shows proper + instead of pipe)
+- CSS duplicate selector issues in file results styling
+- Copy and clear button alignment issues
 - **Critical Error Handling Issues**
   - Silent failures in Base64 encoding/decoding
   - Unhandled clipboard API failures
