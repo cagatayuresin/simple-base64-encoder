@@ -686,7 +686,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // File upload functionality
   const fileInput = document.getElementById('fileInput');
-  const fileUpload = document.getElementById('fileUpload');
+  const fileUpload = document.getElementById('fileUploadArea');
+  
+  if (!fileUpload) {
+    console.error('File upload area not found');
+    return;
+  }
   
   fileInput.addEventListener('change', (e) => {
     const files = Array.from(e.target.files);
