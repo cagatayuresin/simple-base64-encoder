@@ -32,6 +32,50 @@
   padding: 0.5rem;
 }
 
+/* Button alignment fix for copy/clear buttons */
+.field.has-addons {
+  display: flex !important;
+  align-items: flex-start !important;
+}
+
+.field.has-addons .control.is-expanded {
+  flex: 1;
+  display: flex;
+}
+
+.field.has-addons .control.is-expanded .textarea {
+  width: 100%;
+  min-height: 2.5em;
+}
+
+.field.has-addons .control.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  margin-left: 0;
+}
+
+.field.has-addons .control.buttons .button {
+  height: 2.5em;
+  margin: 0;
+  border-radius: 0;
+  border-left: 0;
+  min-width: 2.5em;
+}
+
+.field.has-addons .control.buttons .button:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.field.has-addons .control.buttons .button:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* Fix for textarea alignment */
+/* Removed duplicate - styles moved to existing .textarea.single-line rule above */
+
 /* Error handling styles */
 .error-notification,
 .success-notification {
@@ -237,12 +281,14 @@ body.dark-mode .custom-modal-icon.is-info {
 }
 
 .textarea.single-line {
-  min-height: 1em;
+  min-height: 2.5em !important;
+  height: 2.5em;
   resize: none;
   overflow: hidden;
-  line-height: 1.3;
-  padding: 0.4em 0.6em;
-  height: auto;
+  line-height: 1.5;
+  padding: 0.5em 0.75em;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 /* Dark mode */
@@ -263,6 +309,16 @@ body.dark-mode .footer {
 body.dark-mode .button.is-info {
   background-color: #3a3f44;
   border-color: #555;
+}
+
+body.dark-mode .field.has-addons .control.buttons .button {
+  background-color: #3a3f44;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .field.has-addons .control.buttons .button:hover {
+  background-color: #4a5560;
 }
 
 body.dark-mode .button.is-danger.is-outlined {

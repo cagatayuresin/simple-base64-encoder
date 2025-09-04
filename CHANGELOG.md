@@ -83,6 +83,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Unclear error messages
   - Data loss without warning
   - Missing validation for edge cases
+- **Layout and Alignment Issues**
+  - Copy/Clear buttons misalignment with textarea inputs
+  - Button height inconsistency across different rows
+  - Border radius continuity in button groups
+  - Flexbox layout improvements for better responsiveness
 
 ### Security
 
