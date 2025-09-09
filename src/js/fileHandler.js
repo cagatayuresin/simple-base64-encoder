@@ -59,7 +59,16 @@ const FileHandler = {
   
   // Check if file is binary
   isBinaryFile: (file) => {
+    const type = file.type || '';
     const textTypes = ['text/', 'application/json', 'application/xml', 'application/javascript'];
-    return !textTypes.some(type => file.type.startsWith(type));
+    // If MIME present and starts with known text types, treat as text
+    if (type && textTypes.some(t => type.startsWith(t))) return false;
+    // If extension suggests text
+    const name = (file.name || '').toLowerCase();
+    const textExts = ['.txt','.md','.csv','.tsv','.json','.xml','.yaml','.yml','.js','.ts','.css','.html','.htm'];
+    if (textExts.some(ext => name.endsWith(ext))) return false;
+    // Fallback: treat small files as text by default, large as binary
+    if (file.size <= 64 * 1024) return false;
+    return true;
   }
 };

@@ -23,7 +23,7 @@ Welcome to the **Simple Base64 Encoder** - a professional, feature-rich multi-fo
 - **URL Encoding** - Percent-encoding for web URLs
 - **JSON Formatter** - Pretty-print and minify JSON data
 
-### � **Advanced File Processing**
+### 📦 **Advanced File Processing**
 
 - **Drag & Drop Interface** - Simply drag files onto the upload area
 - **Binary File Support** - Handle images, documents, executables, and more
@@ -170,7 +170,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 🌐 Website: [cagatayuresin.com](https://cagatayuresin.me)
 - 📧 Email: <cagatayuresin@gmail.com>
 - 💼 LinkedIn: [cagatayuresin](https://linkedin.com/in/cagatayuresin)
-- � GitHub: [cagatayuresin](https://github.com/cagatayuresin)
+- 🐙 GitHub: [cagatayuresin](https://github.com/cagatayuresin)
 
 ---
 

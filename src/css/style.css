@@ -1,60 +1,62 @@
 /* Typography - Inter Font Family */
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 /* Logo Style Title */
 .main-title {
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 800 !important;
-    font-size: 2.5rem !important;
-    letter-spacing: 0.05em !important;
-    text-transform: uppercase !important;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 2rem !important;
-    text-shadow: none;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 2.5rem !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem !important;
+  text-shadow: none;
 }
 
 [data-theme="dark"] .main-title {
-    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00cec9 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00cec9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Enhanced Typography Hierarchy */
 .title:not(.main-title) {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
 }
 
 .subtitle {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
 }
 
 .label {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 0.9rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .button {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.025em;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.025em;
 }
 
-.textarea, .input {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    line-height: 1.5;
+.textarea,
+.input {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 /* Base dark theme styles */
@@ -442,7 +444,7 @@ body {
   border: 1px solid #dee2e6;
   border-radius: 6px;
   padding: 1rem;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   font-size: 0.875rem;
   line-height: 1.4;
   overflow-y: auto;

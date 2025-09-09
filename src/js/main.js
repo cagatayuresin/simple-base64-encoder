@@ -90,6 +90,7 @@ function createConverterRow(index, restoreData = null) {
   const plainTextarea = document.createElement("textarea");
   plainTextarea.className = "textarea";
   plainTextarea.id = `plain-${index}`;
+  plainTextarea.setAttribute('aria-label', `Plain text ${index}`);
   plainTextarea.placeholder = "Plain text";
   plainTextarea.rows = 1;
   plainTextarea.value = restoreData?.plain || "";
@@ -159,7 +160,13 @@ function createConverterRow(index, restoreData = null) {
       ErrorHandler.showSuccess('Plain text copied to clipboard!');
     } catch (error) {
       console.error('Clipboard API failed:', error);
-      ErrorHandler.showError('Failed to copy plain text to clipboard. Your browser may not support this feature or requires HTTPS. Please copy manually.');
+      try {
+        plainTextarea.select();
+        document.execCommand('copy');
+        ErrorHandler.showSuccess('Plain text copied to clipboard (fallback)!');
+      } catch (e) {
+        ErrorHandler.showError('Failed to copy. Please copy manually.');
+      }
     }
   });
 
@@ -203,6 +210,7 @@ function createConverterRow(index, restoreData = null) {
   const base64Textarea = document.createElement("textarea");
   base64Textarea.className = "textarea";
   base64Textarea.id = `base64-${index}`;
+  base64Textarea.setAttribute('aria-label', `Converted output ${index}`);
   
   // Set placeholder based on current format
   const formatSelector = document.getElementById('formatSelector');
@@ -293,7 +301,13 @@ function createConverterRow(index, restoreData = null) {
       ErrorHandler.showSuccess(`${converter ? converter.name : 'Base64'} copied to clipboard!`);
     } catch (error) {
       console.error('Clipboard API failed:', error);
-      ErrorHandler.showError('Failed to copy to clipboard. Your browser may not support this feature or requires HTTPS. Please copy manually.');
+      try {
+        base64Textarea.select();
+        document.execCommand('copy');
+        ErrorHandler.showSuccess('Copied to clipboard (fallback)!');
+      } catch (e) {
+        ErrorHandler.showError('Failed to copy. Please copy manually.');
+      }
     }
   });
 
@@ -476,7 +490,7 @@ function addFileResult(file, originalContent, convertedContent, format) {
         </div>
       </div>
       <div class="file-result-actions">
-        <button class="button is-small is-info copy-result" data-content="${convertedContent}">
+        <button class="button is-small is-info copy-result">
           <span class="icon">
             <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -485,6 +499,26 @@ function addFileResult(file, originalContent, convertedContent, format) {
             </svg>
           </span>
           <span>Copy</span>
+        </button>
+        <button class="button is-small is-primary download-result">
+          <span class="icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/>
+              <path d="M7 11l5 5l5 -5"/>
+              <path d="M12 4l0 12"/>
+            </svg>
+          </span>
+          <span>Download</span>
+        </button>
+        <button class="button is-small is-light toggle-result">
+          <span class="icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M6 9l6 6l6 -6"/>
+            </svg>
+          </span>
+          <span>Collapse</span>
         </button>
         <button class="button is-small is-light remove-result">
           <span class="icon">
@@ -511,6 +545,8 @@ function addFileResult(file, originalContent, convertedContent, format) {
   
   // Add event listeners
   const copyBtn = resultItem.querySelector('.copy-result');
+  const downloadBtn = resultItem.querySelector('.download-result');
+  const toggleBtn = resultItem.querySelector('.toggle-result');
   const removeBtn = resultItem.querySelector('.remove-result');
   
   copyBtn.addEventListener('click', async () => {
@@ -527,8 +563,37 @@ function addFileResult(file, originalContent, convertedContent, format) {
       ErrorHandler.showSuccess('Converted content copied to clipboard!');
     } catch (error) {
       console.error('Copy to clipboard failed:', error);
-      ErrorHandler.showError(`Failed to copy to clipboard: ${error.message}`);
+      try {
+        const ta = resultItem.querySelector('.file-result-textarea');
+        ta.select();
+        document.execCommand('copy');
+        ErrorHandler.showSuccess('Copied to clipboard (fallback)!');
+      } catch (e) {
+        ErrorHandler.showError('Failed to copy. Please copy manually.');
+      }
     }
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    const blob = new Blob([convertedContent], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const extMap = { base64: 'b64', base64url: 'b64', hex: 'hex', binary: 'bin', url: 'txt', json: 'json' };
+    const ext = extMap[format] || 'txt';
+    a.href = url;
+    a.download = `${fileInfo.name}.${ext}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  toggleBtn.addEventListener('click', () => {
+    const output = resultItem.querySelector('.file-result-output');
+    const label = toggleBtn.querySelector('span:last-child');
+    const isHidden = output.style.display === 'none';
+    output.style.display = isHidden ? '' : 'none';
+    label.textContent = isHidden ? 'Collapse' : 'Expand';
   });
   
   removeBtn.addEventListener('click', () => {
@@ -671,7 +736,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Theme toggle button
   const themeBtn = document.getElementById("themeToggle");
   const currentTheme = ErrorHandler.safeLocalStorageGet("theme", "light");
-  document.documentElement.setAttribute("data-theme", currentTheme);
+  // If no explicit theme, respect system preference
+  const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initialTheme = currentTheme || (systemPrefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute("data-theme", initialTheme);
 
   themeBtn.addEventListener("click", () => {
     const currentTheme = document.documentElement.getAttribute("data-theme");

@@ -5,64 +5,72 @@
  */
 
 const FormatConverter = {
-  // Standard Base64
+  // Helpers for UTF-8 safe string <-> bytes
+  _toBytes: (str) => new TextEncoder().encode(str),
+  _fromBytes: (bytes) => new TextDecoder().decode(bytes),
+
+  // Standard Base64 (UTF-8 safe)
   base64: {
-    encode: (input) => btoa(input),
-    decode: (input) => atob(input),
+    encode: (input) => {
+      const bytes = new TextEncoder().encode(input);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return btoa(binary);
+    },
+    decode: (input) => {
+      const binary = atob(input);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      return new TextDecoder().decode(bytes);
+    },
     name: 'Base64'
   },
   
-  // URL-Safe Base64
+  // URL-Safe Base64 (UTF-8 safe)
   base64url: {
     encode: (input) => {
-      return btoa(input)
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_')
-        .replace(/=/g, '');
+      const b64 = FormatConverter.base64.encode(input);
+      return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+/g, '');
     },
     decode: (input) => {
-      // Add padding back
-      let padded = input;
-      while (padded.length % 4) {
-        padded += '=';
-      }
-      // Replace URL-safe characters
-      padded = padded.replace(/-/g, '+').replace(/_/g, '/');
-      return atob(padded);
+      let padded = input.replace(/-/g, '+').replace(/_/g, '/');
+      while (padded.length % 4) padded += '=';
+      return FormatConverter.base64.decode(padded);
     },
     name: 'URL-Safe Base64'
   },
   
-  // Hexadecimal
+  // Hexadecimal (UTF-8 bytes)
   hex: {
     encode: (input) => {
-      return Array.from(input)
-        .map(char => char.charCodeAt(0).toString(16).padStart(2, '0'))
-        .join('');
+      const bytes = new TextEncoder().encode(input);
+      return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
     },
     decode: (input) => {
       if (input.length % 2 !== 0) {
         throw new Error('Invalid hex string length');
       }
-      return input.match(/.{2}/g)
-        .map(hex => String.fromCharCode(parseInt(hex, 16)))
-        .join('');
+      const bytePairs = input.match(/.{2}/g) || [];
+      const bytes = new Uint8Array(bytePairs.map(h => parseInt(h, 16)));
+      return new TextDecoder().decode(bytes);
     },
     name: 'Hexadecimal'
   },
   
-  // Binary
+  // Binary (UTF-8 bytes, space-separated octets)
   binary: {
     encode: (input) => {
-      return Array.from(input)
-        .map(char => char.charCodeAt(0).toString(2).padStart(8, '0'))
-        .join(' ');
+      const bytes = new TextEncoder().encode(input);
+      return Array.from(bytes).map(b => b.toString(2).padStart(8, '0')).join(' ');
     },
     decode: (input) => {
-      return input.split(' ')
-        .filter(bin => bin.length > 0)
-        .map(bin => String.fromCharCode(parseInt(bin, 2)))
-        .join('');
+      const bits = input.trim().split(/\s+/).filter(Boolean);
+      const bytes = new Uint8Array(bits.map(bin => parseInt(bin, 2)));
+      return new TextDecoder().decode(bytes);
     },
     name: 'Binary'
   },

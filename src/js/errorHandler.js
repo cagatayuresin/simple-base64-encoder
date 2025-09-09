@@ -21,6 +21,8 @@ const ErrorHandler = {
     notification.style.zIndex = '9999';
     notification.style.maxWidth = '400px';
     
+    notification.setAttribute('role', 'alert');
+    notification.setAttribute('aria-live', 'assertive');
     document.body.appendChild(notification);
     
     // Auto remove after duration
@@ -46,6 +48,8 @@ const ErrorHandler = {
     notification.style.zIndex = '9999';
     notification.style.maxWidth = '400px';
     
+    notification.setAttribute('role', 'status');
+    notification.setAttribute('aria-live', 'polite');
     document.body.appendChild(notification);
     
     setTimeout(() => {
@@ -60,6 +64,8 @@ const ErrorHandler = {
     return new Promise((resolve) => {
       const modal = document.createElement('div');
       modal.className = 'custom-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
       
       const iconType = options.type || 'warning';
       const iconMap = {
@@ -142,9 +148,23 @@ const ErrorHandler = {
       }, 10);
       
       // Focus confirm button
+      // Focus management
       setTimeout(() => {
         confirmBtn.focus();
       }, 350);
+      const focusable = [cancelBtn, confirmBtn];
+      let focusIndex = 0;
+      const trap = (e) => {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          focusIndex = (focusIndex + (e.shiftKey ? -1 : 1) + focusable.length) % focusable.length;
+          focusable[focusIndex].focus();
+        }
+        if (e.key === 'Enter') {
+          confirmBtn.click();
+        }
+      };
+      modal.addEventListener('keydown', trap);
     });
   },
 
