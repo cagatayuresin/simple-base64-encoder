@@ -67,6 +67,8 @@ function createConverterRow(index, restoreData = null) {
     });
     
     if (confirmed) {
+      // Remove any char-count elements within this row to avoid lingering UI
+      row.querySelectorAll('.char-count').forEach(el => el.remove());
       row.remove();
       saveToLocalStorage();
       ErrorHandler.showSuccess('Row deleted successfully');
@@ -123,6 +125,13 @@ function createConverterRow(index, restoreData = null) {
       const base64Textarea = document.getElementById(`base64-${index}`);
       base64Textarea.value = "";
       autoResize(base64Textarea);
+      // Remove char counts if inputs are empty
+      if (plainTextarea.nextElementSibling?.classList.contains('char-count')) {
+        plainTextarea.nextElementSibling.remove();
+      }
+      if (base64Textarea.nextElementSibling?.classList.contains('char-count')) {
+        base64Textarea.nextElementSibling.remove();
+      }
       saveToLocalStorage();
     }
   });
@@ -193,11 +202,18 @@ function createConverterRow(index, restoreData = null) {
   clearPlainBtn.addEventListener("click", () => {
     plainTextarea.value = "";
     autoResize(plainTextarea);
+    // Remove char count for plain
+    if (plainTextarea.nextElementSibling?.classList.contains('char-count')) {
+      plainTextarea.nextElementSibling.remove();
+    }
     
     // Also clear base64
     const base64Textarea = document.getElementById(`base64-${index}`);
     base64Textarea.value = "";
     autoResize(base64Textarea);
+    if (base64Textarea.nextElementSibling?.classList.contains('char-count')) {
+      base64Textarea.nextElementSibling.remove();
+    }
     
     saveToLocalStorage();
     ErrorHandler.showSuccess('Plain text cleared');
@@ -269,6 +285,13 @@ function createConverterRow(index, restoreData = null) {
         plainTextarea.value = "";
         autoResize(plainTextarea);
         base64Textarea.classList.remove('is-danger');
+        // Remove char counts if inputs are empty
+        if (base64Textarea.nextElementSibling?.classList.contains('char-count')) {
+          base64Textarea.nextElementSibling.remove();
+        }
+        if (plainTextarea.nextElementSibling?.classList.contains('char-count')) {
+          plainTextarea.nextElementSibling.remove();
+        }
         saveToLocalStorage();
       }
     }, 500); // 500ms debounce
@@ -340,11 +363,17 @@ function createConverterRow(index, restoreData = null) {
   clearBase64Btn.addEventListener("click", () => {
     base64Textarea.value = "";
     autoResize(base64Textarea);
+    if (base64Textarea.nextElementSibling?.classList.contains('char-count')) {
+      base64Textarea.nextElementSibling.remove();
+    }
     
     // Also clear plain text
     const plainTextarea = document.getElementById(`plain-${index}`);
     plainTextarea.value = "";
     autoResize(plainTextarea);
+    if (plainTextarea.nextElementSibling?.classList.contains('char-count')) {
+      plainTextarea.nextElementSibling.remove();
+    }
     
     saveToLocalStorage();
     ErrorHandler.showSuccess(`${converter ? converter.name : 'Base64'} cleared`);
