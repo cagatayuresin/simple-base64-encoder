@@ -11,6 +11,15 @@ We currently support the latest released version. Security fixes will be issued 
 - If you use features like theme or row auto-save, data is stored only in your browser via localStorage and remains on your device.
 - You can clear saved data at any time from the UI (Clear All) or by clearing your browser storage for this site.
 
+## Analytics Notice (Google Analytics)
+
+- We use Google Analytics 4 (GA4) to understand aggregate usage and improve the experience.
+- GA cookies and measurement are enabled only if you explicitly allow them via the consent banner. The default is denied.
+- If you do not consent, no analytics cookies are set and no analytics requests are sent.
+- Your allow/decline choice is stored only in your browser via localStorage and can be changed at any time.
+- All conversions and file operations happen locally in your browser; your input content is not sent to any server.
+- You can opt out of GA at any time by clicking “Decline” on the banner or by using an ad/tracker blocker.
+
 ## Reporting a Vulnerability
 
 - Email: cagatayuresin@gmail.com

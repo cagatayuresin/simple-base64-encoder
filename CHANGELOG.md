@@ -13,10 +13,12 @@ All notable changes to this project will be documented in this file.
 - Clipboard fallback when Clipboard API is unavailable
 - Accessibility: aria labels, aria-live alerts, modal roles and focus trap
 - Security badge and SECURITY.md policy link in footer
+- Google Analytics (GA4) integration with Consent Mode and user banner
 
 ### Changed
 - Respect system theme on first load via prefers-color-scheme
 - Improve file type heuristic for unknown MIME types
+ - SECURITY.md updated with Data Handling/Privacy and GA Aydınlatma metni
 
 ### Fixed
 - README UTF-8 character issues

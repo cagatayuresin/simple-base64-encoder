@@ -177,7 +177,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Çağatay Üresin
 
-- 🌐 Website: [cagatayuresin.com](https://cagatayuresin.me)
+- 🌐 Website: [cagatayuresin.me](https://cagatayuresin.me)
 - 📧 Email: <cagatayuresin@gmail.com>
 - 💼 LinkedIn: [cagatayuresin](https://linkedin.com/in/cagatayuresin)
 - 🐙 GitHub: [cagatayuresin](https://github.com/cagatayuresin)
