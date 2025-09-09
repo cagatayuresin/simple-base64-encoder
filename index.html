@@ -18,6 +18,31 @@
     <meta name="language" content="English" />
     <meta name="rating" content="general" />
     <meta name="theme-color" content="#3273dc" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="Base64 Encoder">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Base64 Encoder">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="msapplication-TileColor" content="#3273dc">
+    <meta name="msapplication-tap-highlight" content="no">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/src/img/icon-192.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/src/img/icon-152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/img/icon-180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/src/img/icon-167.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/src/img/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/img/icon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/img/icon-16.png">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -116,7 +141,21 @@
 <body>
     <section class="section">
         <div class="container">
-            <h1 class="title has-text-centered main-title">SIMPLE BASE64 ENCODER</h1>
+            <div class="has-text-centered">
+                <h1 class="title main-title">SIMPLE BASE64 ENCODER</h1>
+                <button id="installAppBtn" class="button is-primary is-outlined is-small" style="display: none; margin-top: 0.5rem;">
+                    <span class="icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/>
+                            <path d="M12 12l8 -4.5"/>
+                            <path d="M12 12l0 9"/>
+                            <path d="M12 12l-8 -4.5"/>
+                        </svg>
+                    </span>
+                    <span>Install App</span>
+                </button>
+            </div>
             
             <!-- Format Selection Panel -->
             <div class="box" style="margin-bottom: 2rem;">

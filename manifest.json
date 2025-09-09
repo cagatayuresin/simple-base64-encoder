@@ -1,0 +1,64 @@
+{
+  "name": "Simple Base64 Encoder",
+  "short_name": "Base64 Encoder",
+  "id": "/",
+  "description": "A simple, fast, and secure Base64 encoder/decoder with support for multiple formats including URL-safe Base64, Hexadecimal, and Binary. All processing happens locally in your browser.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3273dc",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["utilities", "productivity", "developer"],
+  "icons": [
+    {
+      "src": "src/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "src/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "src/img/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "src/img/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "src/img/screenshot-desktop.png",
+      "sizes": "1920x1246",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Row",
+      "short_name": "Add Row",
+      "description": "Add a new converter row",
+      "url": "/?action=add-row",
+      "icons": [
+        {
+          "src": "src/img/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

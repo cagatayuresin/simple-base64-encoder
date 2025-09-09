@@ -726,6 +726,82 @@ function updateRowPlaceholders(format) {
 // Global variables
 let converterRows;
 
+// PWA Install functionality
+let deferredPrompt;
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('Service Worker registered successfully:', registration.scope);
+      })
+      .catch((error) => {
+        console.log('Service Worker registration failed:', error);
+      });
+  });
+}
+
+// Handle PWA install prompt
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('PWA install prompt triggered');
+  
+  // Store the event for later use
+  deferredPrompt = e;
+  
+  // Show install button
+  const installBtn = document.getElementById('installAppBtn');
+  if (installBtn) {
+    installBtn.style.display = 'inline-flex';
+    const span = installBtn.querySelector('span:last-child');
+    if (span) {
+      span.textContent = 'Install App';
+    }
+  }
+  
+  // Prevent the mini-infobar from appearing on mobile
+  e.preventDefault();
+});
+
+// Handle install button click
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#installAppBtn')) {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted PWA install');
+          if (typeof gtag === 'function') {
+            gtag('event', 'pwa_install', { outcome: 'accepted' });
+          }
+        } else {
+          console.log('User dismissed PWA install');
+          if (typeof gtag === 'function') {
+            gtag('event', 'pwa_install', { outcome: 'dismissed' });
+          }
+        }
+        deferredPrompt = null;
+        const installBtn = document.getElementById('installAppBtn');
+        if (installBtn) {
+          installBtn.style.display = 'none';
+        }
+      });
+    }
+  }
+});
+
+// Handle PWA installed event
+window.addEventListener('appinstalled', (e) => {
+  console.log('PWA was installed');
+  const installBtn = document.getElementById('installAppBtn');
+  if (installBtn) {
+    installBtn.style.display = 'none';
+  }
+  if (typeof gtag === 'function') {
+    gtag('event', 'pwa_installed');
+  }
+});
+
 // Initialize application
 document.addEventListener("DOMContentLoaded", () => {
   converterRows = document.getElementById("converterRows");
