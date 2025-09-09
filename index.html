@@ -305,14 +305,14 @@
     </footer>
     
     <!-- Analytics Consent Banner -->
-    <div id="analyticsConsent" style="position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 10001; display: none;">
-        <div class="box" style="max-width: 680px; margin: 0 auto;">
-            <p class="is-size-6" style="margin-bottom: 8px;">
+    <div id="analyticsConsent" class="consent-banner" style="display: none;">
+        <div class="consent-content">
+            <p class="consent-text">
                 We use Google Analytics to improve this site. All conversions run locally in your browser. Allow anonymous usage analytics?
             </p>
-            <div class="buttons is-right" style="gap: 8px;">
-                <button id="gaDecline" class="button is-light">Decline</button>
-                <button id="gaAccept" class="button is-info">Allow</button>
+            <div class="consent-buttons">
+                <button id="gaDecline" class="button is-small is-light">Decline</button>
+                <button id="gaAccept" class="button is-small is-info">Allow</button>
             </div>
         </div>
     </div>
