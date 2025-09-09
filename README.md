@@ -2,7 +2,7 @@
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Active-green)](https://cagatayuresin.github.io/simple-base64-encoder/)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/Version-2.1.0-blue.svg)](https://github.com/cagatayuresin/simple-base64-encoder)
+[![Version](https://img.shields.io/badge/Version-2.2.0-blue.svg)](https://github.com/cagatayuresin/simple-base64-encoder)
 [![Security Policy](https://img.shields.io/badge/Security-Policy-blue?style=flat)](SECURITY.md)
 
 🔗 **Live Demo:** [https://cagatayuresin.github.io/simple-base64-encoder/](https://cagatayuresin.github.io/simple-base64-encoder/)
@@ -23,6 +23,14 @@ Welcome to the **Simple Base64 Encoder** - a professional, feature-rich multi-fo
 - **Binary** - Binary string representation of data
 - **URL Encoding** - Percent-encoding for web URLs
 - **JSON Formatter** - Pretty-print and minify JSON data
+
+### 📱 **Progressive Web App (PWA)**
+
+- **Install as App** - Install directly to your device for native app experience
+- **Offline Functionality** - Works without internet connection after installation
+- **App Shortcuts** - Quick access from your device's app drawer
+- **Automatic Updates** - Always get the latest features automatically
+- **Mobile Optimized** - Perfect experience on phones and tablets
 
 ### 📦 **Advanced File Processing**
 
@@ -119,6 +127,14 @@ simple-base64-encoder/
 - **APIs**: FileReader API, Clipboard API, Drag & Drop API
 
 ---
+
+## 🌟 What's New in v2.2.0
+
+- 📱 **Progressive Web App (PWA)** - Install as native app
+- 🔄 **Offline functionality** - Works without internet
+- 📲 **Mobile app experience** - Perfect on phones and tablets
+- ⚡ **Automatic updates** - Always get the latest features
+- 🎯 **App shortcuts** - Quick access from device
 
 ## 🌟 What's New in v2.1.0
 

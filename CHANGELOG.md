@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.2.0] - 2025-01-15
+
+### Added
+- **Progressive Web App (PWA) Support**
+  - Install app button for desktop and mobile browsers
+  - Offline functionality with service worker caching
+  - Native app-like experience with standalone display mode
+  - App shortcuts and proper manifest configuration
+  - Automatic updates and background sync support
+- **Enhanced User Experience**
+  - Install prompt with analytics tracking
+  - App icons in multiple sizes (16x16 to 512x512)
+  - Desktop screenshot for app store listings
+  - Mobile-optimized install experience
+
+### Technical Improvements
+- Service worker for offline file processing
+- PWA manifest with proper metadata
+- Apple Touch Icons and favicon optimization
+- Enhanced caching strategy for static assets
+
 ## [2.1.0] - 2025-09-09
 
 ### Added
