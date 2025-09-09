@@ -89,7 +89,7 @@
     <!-- Bulma CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
     <!-- Tabler Icons CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/tabler-icons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.1/tabler-icons.min.css" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="src/css/style.css" />
 </head>
@@ -244,6 +244,10 @@
     <footer class="footer">
         <div class="content has-text-centered">
             <div id="imagePlaceholder"></div>
+            <div class="footer-logo" style="margin-bottom: 8px;">
+                <img src="src/img/cagatayuresin-logo.png" alt="Çağatay Üresin Logo" class="logo-light" style="height: 64px;">
+                <img src="src/img/cagatayuresin-logo-w.png" alt="Çağatay Üresin Logo" class="logo-dark" style="height: 64px; display: none;">
+            </div>
             <p class="footer-icons" style="margin-top: 10px">
                 <a href="https://github.com/cagatayuresin" target="_blank" rel="noopener noreferrer" title="My GitHub Profile">
                     <svg id="github" class="icon icon-tabler icon-tabler-brand-github" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -276,8 +280,12 @@
                             <path d="M12 7v5l3 3"/>
                         </svg>
                     </span>
-                    <span>Version 2.0.0</span>
+                    <span>Version 2.1.0</span>
                 </span>
+                &nbsp;·&nbsp;
+                <a href="SECURITY.md" target="_blank" rel="noopener noreferrer">
+                    <img alt="Security Policy" src="https://img.shields.io/badge/Security-Policy-blue?style=flat" />
+                </a>
             </p>
         </div>
     </footer>

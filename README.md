@@ -2,7 +2,8 @@
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Active-green)](https://cagatayuresin.github.io/simple-base64-encoder/)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/Version-2.0.0-blue.svg)](https://github.com/cagatayuresin/simple-base64-encoder)
+[![Version](https://img.shields.io/badge/Version-2.1.0-blue.svg)](https://github.com/cagatayuresin/simple-base64-encoder)
+[![Security Policy](https://img.shields.io/badge/Security-Policy-blue?style=flat)](SECURITY.md)
 
 🔗 **Live Demo:** [https://cagatayuresin.github.io/simple-base64-encoder/](https://cagatayuresin.github.io/simple-base64-encoder/)
 
@@ -118,6 +119,15 @@ simple-base64-encoder/
 - **APIs**: FileReader API, Clipboard API, Drag & Drop API
 
 ---
+
+## 🌟 What's New in v2.1.0
+
+- UTF‑8 safe encoding/decoding for Base64/URL‑safe/Hex/Binary
+- File results: Download and Collapse actions
+- Clipboard fallback when native API is unavailable
+- Accessibility improvements (aria-live, roles, labels)
+- Footer logo (light/dark) and Security Policy badge
+- Respect system theme on first load
 
 ## 🌟 What's New in v2.0.0
 

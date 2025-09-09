@@ -741,12 +741,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const initialTheme = currentTheme || (systemPrefersDark ? 'dark' : 'light');
   document.documentElement.setAttribute("data-theme", initialTheme);
 
+  // Footer logo switch by theme
+  function updateFooterLogo(theme) {
+    const lightLogo = document.querySelector('.footer-logo .logo-light');
+    const darkLogo = document.querySelector('.footer-logo .logo-dark');
+    if (lightLogo && darkLogo) {
+      if (theme === 'dark') {
+        lightLogo.style.display = 'none';
+        darkLogo.style.display = '';
+      } else {
+        lightLogo.style.display = '';
+        darkLogo.style.display = 'none';
+      }
+    }
+  }
+  updateFooterLogo(initialTheme);
+
   themeBtn.addEventListener("click", () => {
     const currentTheme = document.documentElement.getAttribute("data-theme");
     const newTheme = currentTheme === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", newTheme);
     ErrorHandler.safeLocalStorageSet("theme", newTheme);
     ErrorHandler.showSuccess(`Switched to ${newTheme} theme`);
+    updateFooterLogo(newTheme);
   });
 
   // File upload functionality

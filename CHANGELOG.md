@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.1.0] - 2025-09-09
+
+### Added
+- UTF-8 safe conversions for Base64, Base64URL, Hex, Binary
+- Footer logo with light/dark variants centered above social icons
+- File result actions: Download and Collapse/Expand
+- Clipboard fallback when Clipboard API is unavailable
+- Accessibility: aria labels, aria-live alerts, modal roles and focus trap
+- Security badge and SECURITY.md policy link in footer
+
+### Changed
+- Respect system theme on first load via prefers-color-scheme
+- Improve file type heuristic for unknown MIME types
+
+### Fixed
+- README UTF-8 character issues
+- Removed risky data attributes from file results (XSS hardening)
+
 ## [2.0.0] - 2025-09-04
 
 ### Added

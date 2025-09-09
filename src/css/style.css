@@ -451,6 +451,18 @@ body {
   word-break: break-all;
 }
 
+/* Limit converter textareas to 7 lines before scroll */
+textarea.textarea {
+  max-height: calc(1.5em * 7 + 1rem);
+  overflow: auto;
+}
+
+/* Footer logo theme handling */
+[data-theme="dark"] .footer-logo .logo-light { display: none !important; }
+[data-theme="dark"] .footer-logo .logo-dark { display: inline-block !important; }
+[data-theme="light"] .footer-logo .logo-light { display: inline-block !important; }
+[data-theme="light"] .footer-logo .logo-dark { display: none !important; }
+
 .file-result-textarea:focus {
   outline: none;
   border-color: #3273dc;
