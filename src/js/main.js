@@ -158,12 +158,18 @@ function createConverterRow(index, restoreData = null) {
     try {
       await navigator.clipboard.writeText(content);
       ErrorHandler.showSuccess('Plain text copied to clipboard!');
+      if (typeof gtag === 'function') {
+        gtag('event', 'copy_content', { field: 'plain' });
+      }
     } catch (error) {
       console.error('Clipboard API failed:', error);
       try {
         plainTextarea.select();
         document.execCommand('copy');
         ErrorHandler.showSuccess('Plain text copied to clipboard (fallback)!');
+        if (typeof gtag === 'function') {
+          gtag('event', 'copy_content', { field: 'plain', method: 'fallback' });
+        }
       } catch (e) {
         ErrorHandler.showError('Failed to copy. Please copy manually.');
       }
@@ -299,12 +305,18 @@ function createConverterRow(index, restoreData = null) {
     try {
       await navigator.clipboard.writeText(content);
       ErrorHandler.showSuccess(`${converter ? converter.name : 'Base64'} copied to clipboard!`);
+      if (typeof gtag === 'function') {
+        gtag('event', 'copy_content', { field: 'converted' });
+      }
     } catch (error) {
       console.error('Clipboard API failed:', error);
       try {
         base64Textarea.select();
         document.execCommand('copy');
         ErrorHandler.showSuccess('Copied to clipboard (fallback)!');
+        if (typeof gtag === 'function') {
+          gtag('event', 'copy_content', { field: 'converted', method: 'fallback' });
+        }
       } catch (e) {
         ErrorHandler.showError('Failed to copy. Please copy manually.');
       }
@@ -432,6 +444,9 @@ async function processFiles(files) {
         try {
           const convertedContent = converter.encode(content);
           addFileResult(file, content, convertedContent, selectedFormat);
+          if (typeof gtag === 'function') {
+            gtag('event', 'file_process', { file_count: files.length, format: selectedFormat });
+          }
         } catch (error) {
           ErrorHandler.showError(`Failed to convert ${file.name}: ${error.message}`);
         }
@@ -656,6 +671,10 @@ function initializeFormatSelector() {
       
       // Update placeholders in existing rows
       updateRowPlaceholders(selectedFormat);
+      // Analytics event
+      if (typeof gtag === 'function') {
+        gtag('event', 'format_change', { format: selectedFormat });
+      }
     }
   });
 }
@@ -688,7 +707,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Clear results button
   const clearResultsBtn = document.getElementById('clearResults');
   if (clearResultsBtn) {
-    clearResultsBtn.addEventListener('click', clearFileResults);
+    clearResultsBtn.addEventListener('click', () => {
+      clearFileResults();
+      if (typeof gtag === 'function') {
+        gtag('event', 'clear_results');
+      }
+    });
   }
   
   // Load saved data or create initial rows
@@ -708,6 +732,9 @@ document.addEventListener("DOMContentLoaded", () => {
     converterRows.appendChild(newRow);
     saveToLocalStorage();
     ErrorHandler.showSuccess('New row added!');
+    if (typeof gtag === 'function') {
+      gtag('event', 'add_row');
+    }
   });
 
   // Clear all button
@@ -730,6 +757,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       saveToLocalStorage();
       ErrorHandler.showSuccess('All rows cleared! 5 fresh rows have been created.');
+      if (typeof gtag === 'function') {
+        gtag('event', 'clear_all');
+      }
     }
   });
 
@@ -764,6 +794,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ErrorHandler.safeLocalStorageSet("theme", newTheme);
     ErrorHandler.showSuccess(`Switched to ${newTheme} theme`);
     updateFooterLogo(newTheme);
+    if (typeof gtag === 'function') {
+      gtag('event', 'theme_toggle', { theme: newTheme });
+    }
   });
 
   // File upload functionality
@@ -797,6 +830,34 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   fileUpload.addEventListener('drop', handleDrop, false);
+  // Analytics Consent Banner logic
+  try {
+    const consentKey = 'ga_consent_v1';
+    const saved = ErrorHandler.safeLocalStorageGet(consentKey);
+    const banner = document.getElementById('analyticsConsent');
+    const acceptBtn = document.getElementById('gaAccept');
+    const declineBtn = document.getElementById('gaDecline');
+    const showBanner = saved !== 'accepted' && saved !== 'declined';
+    if (banner && showBanner) banner.style.display = '';
+    acceptBtn?.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+      }
+      ErrorHandler.safeLocalStorageSet(consentKey, 'accepted');
+      if (banner) banner.style.display = 'none';
+      ErrorHandler.showSuccess('Analytics enabled');
+    });
+    declineBtn?.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', { analytics_storage: 'denied' });
+      }
+      ErrorHandler.safeLocalStorageSet(consentKey, 'declined');
+      if (banner) banner.style.display = 'none';
+      ErrorHandler.showSuccess('Analytics disabled');
+    });
+  } catch (e) {
+    console.warn('Consent banner error', e);
+  }
 
   function preventDefaults(e) {
     e.preventDefault();

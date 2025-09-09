@@ -92,6 +92,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.1/tabler-icons.min.css" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="src/css/style.css" />
+    
+    <!-- Google tag (gtag.js) with Consent Mode -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        // Default: analytics denied until user consents
+        gtag('consent', 'default', {
+            ad_storage: 'denied',
+            analytics_storage: 'denied',
+            functionality_storage: 'denied',
+            personalization_storage: 'denied',
+            security_storage: 'granted'
+        });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWCSYWTVF3"></script>
+    <script>
+        gtag('js', new Date());
+        gtag('config', 'G-EWCSYWTVF3', { send_page_view: true });
+    </script>
 </head>
 
 <body>
@@ -289,6 +308,19 @@
             </p>
         </div>
     </footer>
+    
+    <!-- Analytics Consent Banner -->
+    <div id="analyticsConsent" style="position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 10001; display: none;">
+        <div class="box" style="max-width: 680px; margin: 0 auto;">
+            <p class="is-size-6" style="margin-bottom: 8px;">
+                We use Google Analytics to improve this site. All conversions run locally in your browser. Allow anonymous usage analytics?
+            </p>
+            <div class="buttons is-right" style="gap: 8px;">
+                <button id="gaDecline" class="button is-light">Decline</button>
+                <button id="gaAccept" class="button is-info">Allow</button>
+            </div>
+        </div>
+    </div>
     <!-- Custom JS Modules -->
     <script src="src/js/converters.js"></script>
     <script src="src/js/fileHandler.js"></script>
