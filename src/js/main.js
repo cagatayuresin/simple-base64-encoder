@@ -47,6 +47,7 @@ function createConverterRow(index, restoreData = null) {
   deleteCol.className = "column is-narrow";
   const deleteBtn = document.createElement("button");
   deleteBtn.className = "button is-danger is-outlined";
+  deleteBtn.setAttribute("aria-label", "Delete this row");
   deleteBtn.innerHTML = `<svg class="icon icon-tabler icon-tabler-trash" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
     <path d="M4 7l16 0"/>
@@ -150,6 +151,7 @@ function createConverterRow(index, restoreData = null) {
   copyPlainControl.className = "control";
   const copyPlainBtn = document.createElement("button");
   copyPlainBtn.className = "button is-primary is-outlined";
+  copyPlainBtn.setAttribute("aria-label", "Copy plain text");
   copyPlainBtn.innerHTML = `<svg class="icon icon-tabler icon-tabler-copy" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
     <path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/>
@@ -192,6 +194,7 @@ function createConverterRow(index, restoreData = null) {
   clearPlainControl.className = "control";
   const clearPlainBtn = document.createElement("button");
   clearPlainBtn.className = "button is-warning is-outlined";
+  clearPlainBtn.setAttribute("aria-label", "Clear plain text");
   clearPlainBtn.innerHTML = `<svg class="icon icon-tabler icon-tabler-eraser" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
     <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3"/>
@@ -311,6 +314,7 @@ function createConverterRow(index, restoreData = null) {
   copyBase64Control.className = "control";
   const copyBase64Btn = document.createElement("button");
   copyBase64Btn.className = "button is-primary is-outlined";
+  copyBase64Btn.setAttribute("aria-label", `Copy ${converter ? converter.name : 'Base64'}`);
   copyBase64Btn.innerHTML = `<svg class="icon icon-tabler icon-tabler-copy" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
     <path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"/>
@@ -353,6 +357,7 @@ function createConverterRow(index, restoreData = null) {
   clearBase64Control.className = "control";
   const clearBase64Btn = document.createElement("button");
   clearBase64Btn.className = "button is-warning is-outlined";
+  clearBase64Btn.setAttribute("aria-label", `Clear ${converter ? converter.name : 'Base64'}`);
   clearBase64Btn.innerHTML = `<svg class="icon icon-tabler icon-tabler-eraser" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
     <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3"/>
