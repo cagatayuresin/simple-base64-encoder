@@ -1,74 +1,99 @@
 /**
- * File Handler Utilities
- * Handles file reading operations, file information extraction,
- * and file type detection for binary and text files
+ * File reading and a small text-versus-binary heuristic.
  */
 
-const FileHandler = {
-  // Read file as text
-  readAsText: (file) => {
-    return new Promise((resolve, reject) => {
+export const FileHandler = {
+  readAsText: (file) =>
+    new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = (e) => resolve(e.target.result);
-      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.onload = (event) => resolve(event.target.result);
+      reader.onerror = () => reject(new Error("Failed to read file"));
       reader.readAsText(file);
-    });
-  },
-  
-  // Read file as binary (for images, etc.)
-  readAsBinary: (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const arrayBuffer = e.target.result;
-        const uint8Array = new Uint8Array(arrayBuffer);
-        let binary = '';
-        for (const byte of uint8Array) {
-          binary += String.fromCharCode(byte);
-        }
-        resolve(binary);
-      };
-      reader.onerror = () => reject(new Error('Failed to read file'));
-      reader.readAsArrayBuffer(file);
-    });
-  },
-  
-  // Get file info
+    }),
+
   getFileInfo: (file) => {
     const sizeInBytes = file.size;
-    const sizeInKB = (sizeInBytes / 1024).toFixed(2);
-    const sizeInMB = (sizeInBytes / (1024 * 1024)).toFixed(2);
-
     let sizeFormatted;
     if (sizeInBytes < 1024) {
       sizeFormatted = `${sizeInBytes} B`;
     } else if (sizeInBytes < 1024 * 1024) {
-      sizeFormatted = `${sizeInKB} KB`;
+      sizeFormatted = `${(sizeInBytes / 1024).toFixed(2)} KB`;
     } else {
-      sizeFormatted = `${sizeInMB} MB`;
+      sizeFormatted = `${(sizeInBytes / (1024 * 1024)).toFixed(2)} MB`;
     }
-    
+
     return {
       name: file.name,
       size: sizeInBytes,
-      sizeFormatted: sizeFormatted,
-      type: file.type || 'Unknown',
-      lastModified: new Date(file.lastModified).toLocaleString()
+      sizeFormatted,
+      type: file.type || "Unknown",
+      lastModified: new Date(file.lastModified).toLocaleString(),
     };
   },
-  
-  // Check if file is binary
+
   isBinaryFile: (file) => {
-    const type = file.type || '';
-    const textTypes = ['text/', 'application/json', 'application/xml', 'application/javascript'];
-    // If MIME present and starts with known text types, treat as text
-    if (type && textTypes.some(t => type.startsWith(t))) return false;
-    // If extension suggests text
-    const name = (file.name || '').toLowerCase();
-    const textExts = ['.txt','.md','.csv','.tsv','.json','.xml','.yaml','.yml','.js','.ts','.css','.html','.htm'];
-    if (textExts.some(ext => name.endsWith(ext))) return false;
-    // Fallback: treat small files as text by default, large as binary
-    if (file.size <= 64 * 1024) return false;
-    return true;
-  }
+    const type = (file.type || "").toLowerCase();
+    const name = (file.name || "").toLowerCase();
+    const textTypes = [
+      "text/",
+      "application/json",
+      "application/xml",
+      "application/javascript",
+      "application/xhtml+xml",
+      "image/svg+xml",
+    ];
+    if (type && textTypes.some((prefix) => type.startsWith(prefix))) return false;
+
+    const binaryTypes = [
+      "image/",
+      "audio/",
+      "video/",
+      "font/",
+      "application/pdf",
+      "application/zip",
+      "application/gzip",
+      "application/octet-stream",
+      "application/wasm",
+    ];
+    if (type && binaryTypes.some((prefix) => type.startsWith(prefix))) return true;
+
+    const textExtensions = [
+      ".txt",
+      ".md",
+      ".csv",
+      ".tsv",
+      ".json",
+      ".xml",
+      ".yaml",
+      ".yml",
+      ".js",
+      ".ts",
+      ".css",
+      ".html",
+      ".htm",
+      ".svg",
+    ];
+    if (textExtensions.some((extension) => name.endsWith(extension))) return false;
+
+    const binaryExtensions = [
+      ".png",
+      ".jpg",
+      ".jpeg",
+      ".gif",
+      ".webp",
+      ".pdf",
+      ".zip",
+      ".gz",
+      ".wasm",
+      ".woff",
+      ".woff2",
+      ".ico",
+      ".mp3",
+      ".mp4",
+    ];
+    if (binaryExtensions.some((extension) => name.endsWith(extension))) return true;
+
+    if (!type && file.size <= 64 * 1024) return false;
+    return Boolean(type) || file.size > 64 * 1024;
+  },
 };

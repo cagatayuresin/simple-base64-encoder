@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-11-24
+
+### Changed
+
+- Replaced the multi-row layout with one input and one output.
+- Added System, Light, and Dark themes using the #08D9D6, #252A34, #FF2E63, and #EAEAEA palette.
+- Removed the Bulma, icon font, and web font dependencies.
+- Saved sessions now use the `encoder-state` key. The previous row data is left unread.
+
+### Fixed
+
+- Manifest, icons, and the service worker use paths that work on GitHub Pages project sites.
+
+### Removed
+
+- Unused screenshots, logo images, extra icon sizes, and the `.Jules` notes.
+
 ## [2.2.0] - 2025-01-15
 
 ### Added
@@ -213,17 +230,6 @@ All notable changes to this project will be documented in this file.
 - Mobile-friendly layout
 - Theme persistence across sessions
 - Logo integration with theme switching
-
-### Features
-
-- ➕ Add new converter rows dynamically
-- 🧼 Clear all rows with confirmation
-- 📋 Copy to clipboard functionality
-- 🌓 Light/Dark mode toggle
-- 💾 Automatic data persistence
-- 📱 Responsive mobile design
-- ⚡ Real-time conversion
-- 🎨 Smooth transitions and animations
 
 ### Technical
 

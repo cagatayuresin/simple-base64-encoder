@@ -1,0 +1,17 @@
+{
+  "name": "simple-base64-encoder",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . && stylelint \"src/css/**/*.css\" && html-validate index.html",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "eslint": "^9.16.0",
+    "html-validate": "^9.5.2",
+    "stylelint": "^16.11.0",
+    "stylelint-config-standard": "^36.0.1"
+  }
+}

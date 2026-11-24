@@ -1,107 +1,128 @@
 /**
- * Format Converter Utilities
- * Handles multiple format conversions including Base64, URL-Safe Base64, 
- * Hexadecimal, Binary, URL Encoding, and JSON formatting
+ * Format conversions for text and raw bytes.
+ * String encode/decode stays UTF-8 safe and matches the previous rules.
  */
 
-const FormatConverter = {
-  // Helpers for UTF-8 safe string <-> bytes
-  _toBytes: (str) => new TextEncoder().encode(str),
-  _fromBytes: (bytes) => new TextDecoder().decode(bytes),
+function bytesToBase64(bytes) {
+  let binary = "";
+  const chunkSize = 0x2000;
+  for (let index = 0; index < bytes.length; index += chunkSize) {
+    const chunk = bytes.subarray(index, index + chunkSize);
+    binary += String.fromCharCode.apply(null, chunk);
+  }
+  return btoa(binary);
+}
 
-  // Standard Base64 (UTF-8 safe)
+export function encodeBytes(format, bytes) {
+  const list = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+  if (format === "base64") return bytesToBase64(list);
+  if (format === "base64url") {
+    return bytesToBase64(list).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+  }
+  if (format === "hex") {
+    return Array.from(list, (byte) => byte.toString(16).padStart(2, "0")).join("");
+  }
+  if (format === "binary") {
+    return Array.from(list, (byte) => byte.toString(2).padStart(8, "0")).join(" ");
+  }
+  throw new Error("Binary files can be encoded as Base64, Base64 URL, Hex, or Binary.");
+}
+
+export const FormatConverter = {
   base64: {
     encode: (input) => {
       const bytes = new TextEncoder().encode(input);
-      let binary = '';
-      for (let i = 0; i < bytes.length; i++) {
-        binary += String.fromCharCode(bytes[i]);
+      let binary = "";
+      for (let index = 0; index < bytes.length; index += 1) {
+        binary += String.fromCharCode(bytes[index]);
       }
       return btoa(binary);
     },
     decode: (input) => {
-      const binary = atob(input);
+      let binary;
+      try {
+        binary = atob(input);
+      } catch {
+        throw new Error("Invalid Base64");
+      }
       const bytes = new Uint8Array(binary.length);
-      for (let i = 0; i < binary.length; i++) {
-        bytes[i] = binary.charCodeAt(i);
+      for (let index = 0; index < binary.length; index += 1) {
+        bytes[index] = binary.charCodeAt(index);
       }
       return new TextDecoder().decode(bytes);
     },
-    name: 'Base64'
+    name: "Base64",
   },
-  
-  // URL-Safe Base64 (UTF-8 safe)
+
   base64url: {
     encode: (input) => {
-      const b64 = FormatConverter.base64.encode(input);
-      return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+/g, '');
+      const encoded = FormatConverter.base64.encode(input);
+      return encoded.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
     },
     decode: (input) => {
-      let padded = input.replace(/-/g, '+').replace(/_/g, '/');
-      while (padded.length % 4) padded += '=';
+      let padded = input.replace(/-/g, "+").replace(/_/g, "/");
+      while (padded.length % 4) padded += "=";
       return FormatConverter.base64.decode(padded);
     },
-    name: 'URL-Safe Base64'
+    name: "URL-Safe Base64",
   },
-  
-  // Hexadecimal (UTF-8 bytes)
+
   hex: {
     encode: (input) => {
       const bytes = new TextEncoder().encode(input);
-      return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+      return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
     },
     decode: (input) => {
       if (input.length % 2 !== 0) {
-        throw new Error('Invalid hex string length');
+        throw new Error("Invalid hex string length");
       }
       const bytePairs = input.match(/.{2}/g) || [];
-      const bytes = new Uint8Array(bytePairs.map(h => parseInt(h, 16)));
+      const bytes = new Uint8Array(bytePairs.map((pair) => parseInt(pair, 16)));
       return new TextDecoder().decode(bytes);
     },
-    name: 'Hexadecimal'
+    name: "Hexadecimal",
   },
-  
-  // Binary (UTF-8 bytes, space-separated octets)
+
   binary: {
     encode: (input) => {
       const bytes = new TextEncoder().encode(input);
-      return Array.from(bytes).map(b => b.toString(2).padStart(8, '0')).join(' ');
+      return Array.from(bytes, (byte) => byte.toString(2).padStart(8, "0")).join(" ");
     },
     decode: (input) => {
       const bits = input.trim().split(/\s+/).filter(Boolean);
-      const bytes = new Uint8Array(bits.map(bin => parseInt(bin, 2)));
+      const bytes = new Uint8Array(bits.map((bin) => parseInt(bin, 2)));
       return new TextDecoder().decode(bytes);
     },
-    name: 'Binary'
+    name: "Binary",
   },
-  
-  // URL Encoding
+
   url: {
     encode: (input) => encodeURIComponent(input),
-    decode: (input) => decodeURIComponent(input),
-    name: 'URL Encoding'
+    decode: (input) => {
+      try {
+        return decodeURIComponent(input);
+      } catch {
+        throw new Error("Invalid URL encoding");
+      }
+    },
+    name: "URL Encoding",
   },
-  
-  // JSON Formatter
+
   json: {
     encode: (input) => {
       try {
-        const parsed = JSON.parse(input);
-        return JSON.stringify(parsed, null, 2);
-      } catch (e) {
-        console.error('JSON parsing error:', e.message);
-        throw new Error('Invalid JSON format: ' + e.message);
+        return JSON.stringify(JSON.parse(input), null, 2);
+      } catch (error) {
+        throw new Error(`Invalid JSON format: ${error.message}`);
       }
     },
     decode: (input) => {
       try {
-        const parsed = JSON.parse(input);
-        return JSON.stringify(parsed);
-      } catch (e) {
-        console.error('JSON parsing error:', e.message);
-        throw new Error('Invalid JSON format: ' + e.message);
+        return JSON.stringify(JSON.parse(input));
+      } catch (error) {
+        throw new Error(`Invalid JSON format: ${error.message}`);
       }
     },
-    name: 'JSON Formatter'
-  }
+    name: "JSON Formatter",
+  },
 };

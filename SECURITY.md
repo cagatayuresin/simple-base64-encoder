@@ -8,8 +8,8 @@ We currently support the latest released version. Security fixes will be issued 
 
 - This application is fully client-side. All conversions and file processing happen in your browser.
 - We do not send, collect, or store your input or files on any server.
-- If you use features like theme or row auto-save, data is stored only in your browser via localStorage and remains on your device.
-- You can clear saved data at any time from the UI (Clear All) or by clearing your browser storage for this site.
+- Theme preference is stored in localStorage under `theme`. Rows and the selected format are stored under `encoder-state`. Both stay on your device.
+- Clear all removes the saved rows, or clear this site's storage in the browser.
 
 ## Analytics Notice (Google Analytics)
 

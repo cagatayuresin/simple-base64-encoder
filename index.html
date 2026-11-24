@@ -1,366 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Primary Meta Tags -->
-    <title>Simple Base64 Encoder - Multiple Format Converter with File Support</title>
-    <meta name="title" content="Simple Base64 Encoder - Multiple Format Converter with File Support" />
-    <meta name="description"
-        content="Professional Base64 encoder/decoder with multi-format support (URL-Safe, Hex, Binary, JSON). Drag & drop file upload, binary file support, dark mode, and real-time conversion. Built by Çağatay Üresin." />
-    <meta name="keywords"
-        content="Base64 encoder, Base64 decoder, URL-Safe Base64, Hex converter, Binary converter, JSON formatter, file encoder, drag drop upload, binary files, image encoder, developer tools, web converter, Çağatay Üresin" />
-    <meta name="author" content="Çağatay URESIN" />
-    <meta name="contact" content="cagatayuresin@gmail.com" />
-    <meta name="robots" content="index, follow" />
-    <meta name="language" content="English" />
-    <meta name="rating" content="general" />
-    <meta name="theme-color" content="#3273dc" />
-    
-    <!-- PWA Meta Tags -->
-    <meta name="application-name" content="Base64 Encoder">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Base64 Encoder</title>
+    <meta
+      name="description"
+      content="Encode and decode Base64, URL-safe Base64, hex, binary, URL encoding, and JSON. Files stay in your browser."
+    >
+    <meta name="author" content="Çağatay Üresin">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#EAEAEA">
+    <meta name="color-scheme" content="light dark">
+    <script>
+      (function () {
+        var preference = "system";
+        try {
+          var stored = localStorage.getItem("theme");
+          if (stored === "light" || stored === "dark" || stored === "system") preference = stored;
+        } catch (error) {
+          preference = "system";
+        }
+        var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var resolved = preference === "dark" || (preference === "system" && dark) ? "dark" : "light";
+        var root = document.documentElement;
+        root.setAttribute("data-theme", resolved);
+        root.setAttribute("data-theme-preference", preference);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", resolved === "dark" ? "#252A34" : "#EAEAEA");
+      })();
+    </script>
+    <link rel="canonical" href="https://cagatayuresin.github.io/simple-base64-encoder/">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="src/img/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="src/img/icon-180.png">
+    <meta name="application-name" content="Simple Base64 Encoder">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Base64 Encoder">
-    <meta name="format-detection" content="telephone=no">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="msapplication-config" content="/browserconfig.xml">
-    <meta name="msapplication-TileColor" content="#3273dc">
-    <meta name="msapplication-tap-highlight" content="no">
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    
-    <!-- Apple Touch Icons -->
-    <link rel="apple-touch-icon" href="/src/img/icon-192.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/src/img/icon-152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/src/img/icon-180.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="/src/img/icon-167.png">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/src/img/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/src/img/icon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/src/img/icon-16.png">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://cagatayuresin.github.io/simple-base64-encoder/" />
-    <meta property="og:title" content="Simple Base64 Encoder - Multiple Format Converter" />
-    <meta property="og:description"
-        content="Professional multi-format converter supporting Base64, URL-Safe Base64, Hex, Binary, and JSON. Features file upload, binary support, and beautiful dark mode interface." />
-    <meta property="og:image" content="https://cagatayuresin.github.io/simple-base64-encoder/src/img/preview.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="Simple Base64 Encoder" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://cagatayuresin.github.io/simple-base64-encoder/" />
-    <meta property="twitter:title" content="Simple Base64 Encoder - Multiple Format Converter" />
-    <meta property="twitter:description"
-        content="🚀 Professional Base64 & multi-format converter with file upload support. Features: drag & drop, binary files, JSON formatter, dark mode. Try it now!" />
-    <meta property="twitter:image"
-        content="https://cagatayuresin.github.io/simple-base64-encoder/src/img/preview.png" />
-    <meta property="twitter:creator" content="@cagatayuresin" />
-
-    <!-- Canonical & Additional SEO -->
-    <link rel="canonical" href="https://cagatayuresin.github.io/simple-base64-encoder/" />
-    <meta name="application-name" content="Simple Base64 Encoder" />
-    <meta name="apple-mobile-web-app-title" content="Base64 Encoder" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    
-    <!-- Structured Data for SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cagatayuresin.github.io/simple-base64-encoder/">
+    <meta property="og:title" content="Simple Base64 Encoder">
+    <meta
+      property="og:description"
+      content="Encode and decode Base64, URL-safe Base64, hex, binary, URL encoding, and JSON. Files stay in your browser."
+    >
+    <meta property="og:site_name" content="Simple Base64 Encoder">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Simple Base64 Encoder">
+    <meta
+      name="twitter:description"
+      content="Encode and decode Base64, URL-safe Base64, hex, binary, URL encoding, and JSON. Files stay in your browser."
+    >
     <script type="application/ld+json">
-    {
+      {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Simple Base64 Encoder",
-        "description": "Professional Base64 encoder/decoder with multi-format support including URL-Safe Base64, Hex, Binary, and JSON formatting. Features file upload and binary file support.",
+        "description": "Encode and decode Base64, URL-safe Base64, hex, binary, URL encoding, and JSON. All processing happens locally in the browser.",
         "url": "https://cagatayuresin.github.io/simple-base64-encoder/",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
-        "permissions": "clipboard-read, clipboard-write",
         "author": {
-            "@type": "Person",
-            "name": "Çağatay ÜRESİN",
-            "email": "cagatayuresin@gmail.com",
-            "url": "https://cagatayuresin.me"
-        },
-        "featureList": [
-            "Base64 Encoding/Decoding",
-            "URL-Safe Base64 Support", 
-            "Hexadecimal Conversion",
-            "Binary Representation",
-            "JSON Formatting",
-            "File Upload Support",
-            "Binary File Processing",
-            "Drag & Drop Interface",
-            "Dark Mode Support",
-            "Real-time Conversion"
-        ]
-    }
+          "@type": "Person",
+          "name": "Çağatay Üresin",
+          "url": "https://cagatayuresin.me"
+        }
+      }
     </script>
-    
-    <!-- Google Fonts - Inter for modern, clean look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="src/img/favicon.ico">    
-    <!-- Bulma CSS CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
-    <!-- Tabler Icons CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.1/tabler-icons.min.css" />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="src/css/style.css" />
-    
-    <!-- Google tag (gtag.js) with Consent Mode -->
+    <link rel="stylesheet" href="src/css/style.css">
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        // Default: analytics denied until user consents
-        gtag('consent', 'default', {
-            ad_storage: 'denied',
-            analytics_storage: 'denied',
-            functionality_storage: 'denied',
-            personalization_storage: 'denied',
-            security_storage: 'granted'
-        });
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        analytics_storage: "denied",
+        functionality_storage: "denied",
+        personalization_storage: "denied",
+        security_storage: "granted",
+      });
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWCSYWTVF3"></script>
     <script>
-        gtag('js', new Date());
-        gtag('config', 'G-EWCSYWTVF3', { send_page_view: true });
+      gtag("js", new Date());
+      gtag("config", "G-EWCSYWTVF3", { send_page_view: true });
     </script>
-</head>
-
-<body>
-    <section class="section">
-        <div class="container">
-            <div class="has-text-centered">
-                <h1 class="title main-title">SIMPLE BASE64 ENCODER</h1>
-                <button id="installAppBtn" class="button is-primary is-outlined is-small" style="display: none; margin-top: 0.5rem;">
-                    <span class="icon">
-                        <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/>
-                            <path d="M12 12l8 -4.5"/>
-                            <path d="M12 12l0 9"/>
-                            <path d="M12 12l-8 -4.5"/>
-                        </svg>
-                    </span>
-                    <span>Install App</span>
-                </button>
-            </div>
-            
-            <!-- Format Selection Panel -->
-            <div class="box" style="margin-bottom: 2rem;">
-                <h2 class="subtitle has-text-centered">Format & Tools</h2>
-                <div class="columns is-multiline">
-                    <!-- File Upload -->
-                    <div class="column is-6">
-                        <div class="field">
-                            <label class="label" for="fileInput">File Upload</label>
-                            <div class="file is-boxed has-name is-fullwidth" id="fileUploadArea">
-                                <label class="file-label">
-                                    <input class="file-input" type="file" id="fileInput" multiple>
-                                    <span class="file-cta">
-                                        <span class="file-icon">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
-                                                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
-                                                <path d="M12 17v-6"/>
-                                                <path d="M9.5 14.5l2.5 -2.5l2.5 2.5"/>
-                                            </svg>
-                                        </span>
-                                        <span class="file-label">Choose files or drag here...</span>
-                                    </span>
-                                    <span class="file-name" id="fileName">No file selected</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Format Selector -->
-                    <div class="column is-6">
-                        <div class="field">
-                            <label class="label" for="formatSelector">Conversion Format</label>
-                            <div class="control">
-                                <div class="select is-fullwidth">
-                                    <select id="formatSelector">
-                                        <option value="base64">Standard Base64</option>
-                                        <option value="base64url">URL-Safe Base64</option>
-                                        <option value="hex">Hexadecimal</option>
-                                        <option value="binary">Binary</option>
-                                        <option value="url">URL Encoding</option>
-                                        <option value="json">JSON Formatter</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Visual Feedback Section -->
-                <div class="columns">
-                    <div class="column">
-                        <div id="processingInfo" class="notification is-info is-hidden">
-                            <div class="level">
-                                <div class="level-left">
-                                    <div class="level-item">
-                                        <span id="processingText">Processing...</span>
-                                    </div>
-                                </div>
-                                <div class="level-right">
-                                    <div class="level-item">
-                                        <progress class="progress is-small is-info" id="progressBar" style="width: 200px;"></progress>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div id="fileInfo" class="notification is-light is-hidden">
-                            <div class="content">
-                                <p><strong>File Details:</strong></p>
-                                <ul id="fileDetails"></ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- File Results Section -->
-            <div id="fileResults" class="box is-hidden" style="margin-bottom: 2rem;">
-                <h3 class="subtitle">
-                    <span class="icon-text">
-                        <span class="icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <path d="M9 12l2 2l4 -4"/>
-                                <path d="M21 12c-1 0 -3 1 -3 3s2 3 3 3s3 -1 3 -3s-2 -3 -3 -3"/>
-                                <path d="M10 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0"/>
-                                <path d="M7 12h3m4 0h7"/>
-                            </svg>
-                        </span>
-                        <span>Conversion Results</span>
-                    </span>
-                    <button class="button is-small is-pulled-right" id="clearResults">
-                        <span class="icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <path d="M18 6l-12 12"/>
-                                <path d="M6 6l12 12"/>
-                            </svg>
-                        </span>
-                        <span>Clear</span>
-                    </button>
-                </h3>
-                <div id="fileResultsContainer"></div>
-            </div>
-
-            <!-- Converter rows container -->
-            <div id="converterRows"></div>
-            <!-- Add row button -->
-            <div class="has-text-centered" style="margin-top: 20px">
-                <button id="addRowButton" class="button is-primary" aria-label="Add new row" title="Add new row">
-                    <svg class="icon icon-tabler icon-tabler-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                </button>
-            </div>
-            <div class="has-text-centered" style="margin-top: 10px">
-                <button id="clearAllButton" class="button is-danger">
-                    <svg class="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M4 7l16 0"/>
-                        <path d="M10 11l0 6"/>
-                        <path d="M14 11l0 6"/>
-                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
-                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
-                    </svg>
-                    &nbsp; Clear All
-                </button>
-                <button id="themeToggle" class="button is-dark">
-                    <svg id="themeToggleIcon" class="icon icon-tabler icon-tabler-moon" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>
-                    </svg>
-                    &nbsp; Toggle Theme
-                </button>
-            </div>
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Skip to converter</a>
+    <header class="site-header shell">
+      <div class="brand">
+        <img class="brand-mark" src="src/img/favicon.svg" width="44" height="44" alt="">
+        <div>
+          <h1>Simple Base64 Encoder</h1>
+          <p>Encode and decode locally. Nothing is uploaded.</p>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="content has-text-centered">
-            <div id="imagePlaceholder"></div>
-            <div class="footer-logo" style="margin-bottom: 8px;">
-                <img src="src/img/cagatayuresin-logo.png" alt="Çağatay Üresin Logo" class="logo-light" style="height: 64px;">
-                <img src="src/img/cagatayuresin-logo-w.png" alt="Çağatay Üresin Logo" class="logo-dark" style="height: 64px; display: none;">
-            </div>
-            <p class="footer-icons" style="margin-top: 10px">
-                <a href="https://github.com/cagatayuresin" target="_blank" rel="noopener noreferrer" title="My GitHub Profile">
-                    <svg id="github" class="icon icon-tabler icon-tabler-brand-github" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/>
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com/in/cagatayuresin/" target="_blank" rel="noopener noreferrer" title="My LinkedIn Profile">
-                    <svg id="linkedin" class="icon icon-tabler icon-tabler-brand-linkedin" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/>
-                        <path d="M8 11l0 5"/>
-                        <path d="M8 8l0 .01"/>
-                        <path d="M12 16l0 -5"/>
-                        <path d="M16 16v-3a2 2 0 0 0 -4 0"/>
-                    </svg>
-                </a>
-            </p>
-            <p class="footer-text small">
-                <strong class="strong">Simple Base64 Encoder</strong> by
-                <a href="https://cagatayuresin.me" target="_blank">Çağatay Üresin</a>. The source code is licensed
-                <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>.
-            </p>
-            <p class="footer-text small" style="margin-top: 0.5rem; opacity: 0.7;">
-                <span class="icon-text">
-                    <a href="https://github.com/cagatayuresin/simple-base64-encoder/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">
-                        <img alt="Version" src="https://img.shields.io/badge/Version-2.1.0-blue.svg" />
-                    </a>
-                </span>
-                &nbsp;
-                <a href="https://github.com/cagatayuresin/simple-base64-encoder/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">
-                    <img alt="Security Policy" src="https://img.shields.io/badge/Security-Policy-blue?style=flat" />
-                </a>
-            </p>
+      </div>
+      <div class="header-tools">
+        <div class="segment theme-switch" role="radiogroup" aria-label="Color theme">
+          <label class="segment-option" title="Light">
+            <input type="radio" name="theme" value="light">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+              <path d="M3 12h1"></path>
+              <path d="M12 3v1"></path>
+              <path d="M20 12h1"></path>
+              <path d="M12 20v1"></path>
+              <path d="M5.6 5.6l.7 .7"></path>
+              <path d="M18.4 5.6l-.7 .7"></path>
+              <path d="M17.7 17.7l.7 .7"></path>
+              <path d="M6.3 17.7l-.7 .7"></path>
+            </svg>
+            <span class="visually-hidden">Light</span>
+          </label>
+          <label class="segment-option" title="Dark">
+            <input type="radio" name="theme" value="dark">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+            </svg>
+            <span class="visually-hidden">Dark</span>
+          </label>
+          <label class="segment-option" title="Automatic">
+            <input type="radio" name="theme" value="system" checked>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1z"></path>
+              <path d="M7 20h10"></path>
+              <path d="M9 16v4"></path>
+              <path d="M15 16v4"></path>
+            </svg>
+            <span class="visually-hidden">Automatic</span>
+          </label>
         </div>
+        <button type="button" id="installBtn" class="button" hidden>Install</button>
+      </div>
+    </header>
+
+    <main id="workspace" class="shell">
+      <section class="sheet" id="sheet" aria-label="Converter rows">
+        <div class="sheet-toolbar">
+          <div class="segment format-switch" role="radiogroup" aria-label="Format">
+            <label class="segment-option">
+              <input type="radio" name="format" value="base64" checked>
+              <span>Base64</span>
+            </label>
+            <label class="segment-option">
+              <input type="radio" name="format" value="base64url">
+              <span>Base64 URL</span>
+            </label>
+            <label class="segment-option">
+              <input type="radio" name="format" value="hex">
+              <span>Hex</span>
+            </label>
+            <label class="segment-option">
+              <input type="radio" name="format" value="binary">
+              <span>Binary</span>
+            </label>
+            <label class="segment-option">
+              <input type="radio" name="format" value="url">
+              <span>URL</span>
+            </label>
+            <label class="segment-option">
+              <input type="radio" name="format" value="json">
+              <span>JSON</span>
+            </label>
+          </div>
+          <label class="button" for="fileInput" title="Load a text or binary file into the next empty row">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+              <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+              <path d="M12 11v6"></path>
+              <path d="M9.5 13.5l2.5 -2.5l2.5 2.5"></path>
+            </svg>
+            Open file
+          </label>
+          <input id="fileInput" class="visually-hidden" type="file" multiple>
+        </div>
+
+        <div class="sheet-head">
+          <span></span>
+          <span id="encodedHead">Base64</span>
+          <span id="plainHead">Text</span>
+          <span></span>
+        </div>
+        <div id="rows" class="rows"></div>
+      </section>
+
+      <div class="actions">
+        <button type="button" id="addRow" class="icon-button icon-button-accent" aria-label="Add row">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5v14"></path>
+            <path d="M5 12h14"></path>
+          </svg>
+        </button>
+        <button type="button" id="removeRow" class="icon-button" aria-label="Remove last row">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h14"></path>
+          </svg>
+        </button>
+        <button type="button" id="clearAll" class="button button-danger">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16"></path>
+            <path d="M10 11v6"></path>
+            <path d="M14 11v6"></path>
+            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+          </svg>
+          Clear all
+        </button>
+      </div>
+      <p class="meta">Converted in your browser. Either side of a row updates the other.</p>
+    </main>
+
+    <div id="toasts" class="toasts" aria-live="polite" aria-relevant="additions"></div>
+
+    <footer class="site-footer shell">
+      <p>
+        <a href="https://cagatayuresin.me">Çağatay Üresin</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://github.com/cagatayuresin/simple-base64-encoder">GitHub</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://www.linkedin.com/in/cagatayuresin/">LinkedIn</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://github.com/cagatayuresin/simple-base64-encoder/blob/main/LICENSE">MIT</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://github.com/cagatayuresin/simple-base64-encoder/blob/main/SECURITY.md">Security</a>
+      </p>
     </footer>
-    
-    <!-- Analytics Consent Banner -->
-    <div id="analyticsConsent" class="consent-banner" style="display: none;">
-        <div class="consent-content">
-            <p class="consent-text">
-                We use Google Analytics to improve this site. All conversions run locally in your browser. Allow anonymous usage analytics?
-            </p>
-            <div class="consent-buttons">
-                <button id="gaDecline" class="button is-small is-light">Decline</button>
-                <button id="gaAccept" class="button is-small is-info">Allow</button>
-            </div>
-        </div>
-    </div>
-    <!-- Custom JS Modules -->
-    <script src="src/js/converters.js"></script>
-    <script src="src/js/fileHandler.js"></script>
-    <script src="src/js/visualFeedback.js"></script>
-    <script src="src/js/errorHandler.js"></script>
-    <script src="src/js/main.js"></script>
-</body>
 
+    <div id="analyticsConsent" class="consent" hidden>
+      <p class="consent-text">
+        This site can use Google Analytics to understand aggregate usage. Conversions stay in your browser. Allow anonymous analytics?
+      </p>
+      <div class="consent-actions">
+        <button type="button" id="gaDecline" class="button">Decline</button>
+        <button type="button" id="gaAccept" class="button button-accent">Allow</button>
+      </div>
+    </div>
+
+    <script type="module" src="src/js/app.js"></script>
+  </body>
 </html>
