@@ -4,9 +4,9 @@
  */
 
 function toBase64Url(encoded) {
-  const translated = encoded.replace(/\+/g, "-").replace(/\//g, "_");
+  const translated = encoded.replaceAll("+", "-").replaceAll("/", "_");
   let end = translated.length;
-  while (end > 0 && translated.charCodeAt(end - 1) === 61) end -= 1;
+  while (end > 0 && translated.codePointAt(end - 1) === 61) end -= 1;
   return translated.slice(0, end);
 }
 
@@ -15,7 +15,7 @@ function bytesToBase64(bytes) {
   const chunkSize = 0x2000;
   for (let index = 0; index < bytes.length; index += chunkSize) {
     const chunk = bytes.subarray(index, index + chunkSize);
-    binary += String.fromCharCode.apply(null, chunk);
+    binary += String.fromCodePoint.apply(null, chunk);
   }
   return btoa(binary);
 }
@@ -40,9 +40,7 @@ export const FormatConverter = {
     encode: (input) => {
       const bytes = new TextEncoder().encode(input);
       let binary = "";
-      for (let index = 0; index < bytes.length; index += 1) {
-        binary += String.fromCharCode(bytes[index]);
-      }
+      for (const byte of bytes) binary += String.fromCodePoint(byte);
       return btoa(binary);
     },
     decode: (input) => {
@@ -54,7 +52,7 @@ export const FormatConverter = {
       }
       const bytes = new Uint8Array(binary.length);
       for (let index = 0; index < binary.length; index += 1) {
-        bytes[index] = binary.charCodeAt(index);
+        bytes[index] = binary.codePointAt(index);
       }
       return new TextDecoder().decode(bytes);
     },
@@ -67,7 +65,7 @@ export const FormatConverter = {
       return toBase64Url(encoded);
     },
     decode: (input) => {
-      let padded = input.replace(/-/g, "+").replace(/_/g, "/");
+      let padded = input.replaceAll("-", "+").replaceAll("_", "/");
       while (padded.length % 4) padded += "=";
       return FormatConverter.base64.decode(padded);
     },

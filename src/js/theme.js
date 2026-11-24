@@ -22,8 +22,8 @@ export function resolveTheme(preference) {
 export function applyTheme(preference) {
   const resolved = resolveTheme(preference);
   const root = document.documentElement;
-  root.setAttribute("data-theme", resolved);
-  root.setAttribute("data-theme-preference", preference);
+  root.dataset.theme = resolved;
+  root.dataset.themePreference = preference;
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.setAttribute("content", THEME_COLORS[resolved]);
   return resolved;

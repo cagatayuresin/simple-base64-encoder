@@ -19,13 +19,14 @@
           var stored = localStorage.getItem("theme");
           if (stored === "light" || stored === "dark" || stored === "system") preference = stored;
         } catch (error) {
+          // Private browsing can block storage. The page still follows the system theme.
           preference = "system";
         }
         var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         var resolved = preference === "dark" || (preference === "system" && dark) ? "dark" : "light";
         var root = document.documentElement;
-        root.setAttribute("data-theme", resolved);
-        root.setAttribute("data-theme-preference", preference);
+        root.dataset.theme = resolved;
+        root.dataset.themePreference = preference;
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute("content", resolved === "dark" ? "#252A34" : "#EAEAEA");
       })();

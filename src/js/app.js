@@ -343,42 +343,46 @@ function openFiles(fileList) {
   });
 }
 
+async function loadFile(file, format) {
+  if (file.size > MAX_FILE_BYTES) {
+    showError(`${file.name} is larger than 5 MB and was skipped.`);
+    return 0;
+  }
+
+  try {
+    const row = emptyRow() || createRow();
+    if (FileHandler.isBinaryFile(file)) {
+      if (format === "url") {
+        showError("Binary files can be encoded as Base64, Base64 URL, Hex, or Binary.");
+        return 0;
+      }
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      const encoded = row.querySelector('[data-side="encoded"]');
+      const plain = row.querySelector('[data-side="plain"]');
+      encoded.value = encodeBytes(format, bytes);
+      plain.value = "";
+      row.dataset.source = "encoded";
+      autoResize(encoded);
+      autoResize(plain);
+    } else {
+      row.querySelector('[data-side="plain"]').value = await file.text();
+      convertRow(row, "plain");
+    }
+    return 1;
+  } catch {
+    showError(`${file.name} could not be read.`);
+    return 0;
+  }
+}
+
 async function loadFiles(fileList) {
   const files = Array.from(fileList);
   if (!files.length) return;
   const format = selectedFormat();
-  let loaded = 0;
-
-  for (const file of files) {
-    if (file.size > MAX_FILE_BYTES) {
-      showError(`${file.name} is larger than 5 MB and was skipped.`);
-      continue;
-    }
-
-    try {
-      const row = emptyRow() || createRow();
-      if (FileHandler.isBinaryFile(file)) {
-        if (format === "url") {
-          showError("Binary files can be encoded as Base64, Base64 URL, Hex, or Binary.");
-          continue;
-        }
-        const bytes = new Uint8Array(await file.arrayBuffer());
-        const encoded = row.querySelector('[data-side="encoded"]');
-        const plain = row.querySelector('[data-side="plain"]');
-        encoded.value = encodeBytes(format, bytes);
-        plain.value = "";
-        row.dataset.source = "encoded";
-        autoResize(encoded);
-        autoResize(plain);
-      } else {
-        row.querySelector('[data-side="plain"]').value = await FileHandler.readAsText(file);
-        convertRow(row, "plain");
-      }
-      loaded += 1;
-    } catch {
-      showError(`${file.name} could not be read.`);
-    }
-  }
+  const loaded = await files.reduce(async (previous, file) => {
+    const count = await previous;
+    return count + (await loadFile(file, format));
+  }, Promise.resolve(0));
 
   if (loaded) {
     persist();

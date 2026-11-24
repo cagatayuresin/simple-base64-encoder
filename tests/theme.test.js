@@ -14,10 +14,20 @@ function installEnvironment({ stored, matches = false, meta = true } = {}) {
   };
   const root = {
     attrs: {},
+    dataset: {},
     setAttribute(name, value) {
       this.attrs[name] = value;
     },
   };
+  root.dataset = new Proxy(root.dataset, {
+    set(target, property, value) {
+      const stored = String(value);
+      target[property] = stored;
+      const name = `data-${String(property).replaceAll(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}`;
+      root.attrs[name] = stored;
+      return true;
+    },
+  });
   const themeMeta = meta ? { content: "", setAttribute(name, value) { this[name] = value; } } : null;
   globalThis.document = {
     documentElement: root,

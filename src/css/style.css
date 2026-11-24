@@ -419,7 +419,12 @@ textarea {
   color: var(--paper);
   box-shadow: var(--shadow);
   font-size: 0.9375rem;
-  animation: toast-in 160ms ease-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toast {
+    animation: toast-in 160ms ease-out;
+  }
 }
 
 .toast-error {

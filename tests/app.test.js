@@ -295,20 +295,14 @@ test("loads text and binary files and skips files it cannot encode", async () =>
   await wait(0);
   assert.equal(toastText().includes("big.txt is larger than 5 MB and was skipped."), true);
 
-  const originalReader = window.FileReader;
-  window.FileReader = class {
-    readAsText() {
-      this.onerror();
-    }
-  };
-  globalThis.FileReader = window.FileReader;
   const broken = fileOf("bad.txt", "x", "text/plain");
+  Object.defineProperty(broken, "text", {
+    configurable: true,
+    value: () => Promise.reject(new Error("unreadable")),
+  });
   Object.defineProperty(input, "files", { configurable: true, value: [broken] });
   input.dispatchEvent(new window.Event("change"));
-  await wait(0);
-  assert.equal(toastText().includes("bad.txt could not be read."), true);
-  window.FileReader = originalReader;
-  globalThis.FileReader = originalReader;
+  await until(() => toastText().includes("bad.txt could not be read."));
 
   Object.defineProperty(input, "files", { configurable: true, get: () => undefined });
   input.dispatchEvent(new window.Event("change"));
