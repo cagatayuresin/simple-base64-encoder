@@ -37,6 +37,8 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   min-height: 100vh;
   background: var(--bg);
@@ -44,6 +46,11 @@ body {
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 1rem;
   line-height: 1.5;
+}
+
+.page {
+  width: 100%;
+  margin-block: auto;
 }
 
 button,
@@ -431,20 +438,28 @@ textarea {
 }
 
 .site-footer {
-  padding: 2rem 0 5.5rem;
+  padding: 1.5rem 0 1.75rem;
   color: var(--muted);
   font-size: 0.875rem;
 }
 
-.site-footer p {
+.site-footer nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem 0.7rem;
-  margin: 0;
+  justify-content: center;
+  gap: 0.75rem 1.15rem;
 }
 
 .site-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   color: var(--text);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
   text-underline-offset: 0.18em;
 }
 

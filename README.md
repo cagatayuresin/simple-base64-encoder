@@ -1,6 +1,8 @@
 # Simple Base64 Encoder
 
-Encode and decode Base64, URL-safe Base64, hexadecimal, binary, URL encoding, and JSON in the browser. Nothing you type or drop is uploaded.
+[![CI](https://github.com/cagatayuresin/simple-base64-encoder/actions/workflows/ci.yml/badge.svg)](https://github.com/cagatayuresin/simple-base64-encoder/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/github/license/cagatayuresin/simple-base64-encoder)](LICENSE) [![Live site](https://img.shields.io/website?url=https%3A%2F%2Fcagatayuresin.github.io%2Fsimple-base64-encoder%2F&label=live%20site)](https://cagatayuresin.github.io/simple-base64-encoder/) [![Node.js 22](https://img.shields.io/badge/node-22-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+
+Encode and decode Base64, URL-safe Base64, hexadecimal, binary, and URL encoding in the browser. Nothing you type or drop is uploaded.
 
 Live site: [https://cagatayuresin.github.io/simple-base64-encoder/](https://cagatayuresin.github.io/simple-base64-encoder/)
 
@@ -8,7 +10,7 @@ Live site: [https://cagatayuresin.github.io/simple-base64-encoder/](https://caga
 
 1. The page opens with three rows. The left field is the encoded value and the right field is the text. Typing in either one updates the other.
 2. Use + to add a row and - to remove the last one. Each row also has its own delete button. Clear all restores three empty rows.
-3. Choose Base64, Base64 URL, Hex, Binary, URL, or JSON. JSON keeps pretty text on the left and compact JSON on the right.
+3. Choose Base64, Base64 URL, Hex, Binary, or URL.
 4. Drop a file on the sheet, or use Open file. Text files fill the text side. Binary files are encoded on the left.
 5. Pick System, Light, or Dark. System follows the operating system and updates if it changes.
 

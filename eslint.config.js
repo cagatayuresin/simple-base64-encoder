@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 
 const browserGlobals = {
+  AbortController: "readonly",
   atob: "readonly",
   Blob: "readonly",
   btoa: "readonly",

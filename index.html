@@ -6,7 +6,7 @@
     <title>Simple Base64 Encoder</title>
     <meta
       name="description"
-      content="Encode and decode Base64, URL-safe Base64, hex, binary, URL encoding, and JSON. Files stay in your browser."
+      content="Encode and decode Base64, URL-safe Base64, hex, binary, and URL encoding. Files stay in your browser."
     >
     <meta name="author" content="Çağatay Üresin">
     <meta name="robots" content="index, follow">
@@ -43,7 +43,7 @@
     <meta property="og:title" content="Simple Base64 Encoder">
     <meta
       property="og:description"
-      content="Encode and decode Base64, URL-safe Base64, hex, binary, URL encoding, and JSON. Files stay in your browser."
+      content="Encode and decode Base64, URL-safe Base64, hex, binary, and URL encoding. Files stay in your browser."
     >
     <meta property="og:site_name" content="Simple Base64 Encoder">
     <meta property="og:locale" content="en_US">
@@ -51,21 +51,21 @@
     <meta name="twitter:title" content="Simple Base64 Encoder">
     <meta
       name="twitter:description"
-      content="Encode and decode Base64, URL-safe Base64, hex, binary, URL encoding, and JSON. Files stay in your browser."
+      content="Encode and decode Base64, URL-safe Base64, hex, binary, and URL encoding. Files stay in your browser."
     >
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Simple Base64 Encoder",
-        "description": "Encode and decode Base64, URL-safe Base64, hex, binary, URL encoding, and JSON. All processing happens locally in the browser.",
+        "description": "Encode and decode Base64, URL-safe Base64, hex, binary, and URL encoding. All processing happens locally in the browser.",
         "url": "https://cagatayuresin.github.io/simple-base64-encoder/",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
         "author": {
           "@type": "Person",
           "name": "Çağatay Üresin",
-          "url": "https://cagatayuresin.me"
+          "url": "https://cagatayuresin.com"
         }
       }
     </script>
@@ -91,6 +91,7 @@
   </head>
   <body>
     <a class="skip-link" href="#workspace">Skip to converter</a>
+    <div class="page">
     <header class="site-header shell">
       <div class="brand">
         <img class="brand-mark" src="src/img/favicon.svg" width="44" height="44" alt="">
@@ -162,10 +163,6 @@
               <input type="radio" name="format" value="url">
               <span>URL</span>
             </label>
-            <label class="segment-option">
-              <input type="radio" name="format" value="json">
-              <span>JSON</span>
-            </label>
           </div>
           <label class="button" for="fileInput" title="Load a text or binary file into the next empty row">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -214,21 +211,52 @@
       <p class="meta">Converted in your browser. Either side of a row updates the other.</p>
     </main>
 
-    <div id="toasts" class="toasts" aria-live="polite" aria-relevant="additions"></div>
-
     <footer class="site-footer shell">
-      <p>
-        <a href="https://cagatayuresin.me">Çağatay Üresin</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://github.com/cagatayuresin/simple-base64-encoder">GitHub</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://www.linkedin.com/in/cagatayuresin/">LinkedIn</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://github.com/cagatayuresin/simple-base64-encoder/blob/main/LICENSE">MIT</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://github.com/cagatayuresin/simple-base64-encoder/blob/main/SECURITY.md">Security</a>
-      </p>
+      <nav aria-label="Links">
+        <a href="https://cagatayuresin.com">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+            <path d="M3.6 9h16.8"></path>
+            <path d="M3.6 15h16.8"></path>
+            <path d="M11.5 3a17 17 0 0 0 0 18"></path>
+            <path d="M12.5 3a17 17 0 0 1 0 18"></path>
+          </svg>
+          cagatayuresin.com
+        </a>
+        <a href="https://github.com/cagatayuresin/simple-base64-encoder">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/cagatayuresin/">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+            <path d="M8 11v5"></path>
+            <path d="M8 8v.01"></path>
+            <path d="M12 16v-5"></path>
+            <path d="M16 16v-3a2 2 0 0 0 -4 0"></path>
+          </svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/cagatayuresin/simple-base64-encoder/blob/main/LICENSE">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2"></path>
+            <path d="M19 15v2a2 2 0 0 1 -2 2h-2"></path>
+          </svg>
+          MIT
+        </a>
+        <a href="https://github.com/cagatayuresin/simple-base64-encoder/blob/main/SECURITY.md">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"></path>
+          </svg>
+          Security
+        </a>
+      </nav>
     </footer>
+    </div>
+
+    <div id="toasts" class="toasts" aria-live="polite" aria-relevant="additions"></div>
 
     <div id="analyticsConsent" class="consent" hidden>
       <p class="consent-text">

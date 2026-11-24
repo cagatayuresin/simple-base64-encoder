@@ -14,7 +14,6 @@ const LABELS = {
   hex: ["Hex", "Text"],
   binary: ["Binary", "Text"],
   url: ["URL encoded", "Text"],
-  json: ["Pretty JSON", "JSON"],
 };
 
 const ICONS = {
@@ -25,13 +24,13 @@ const ICONS = {
   check: '<path d="M5 12l5 5l10 -10"></path>',
 };
 
-const rowsEl = document.getElementById("rows");
-const sheetEl = document.getElementById("sheet");
-const toastsEl = document.getElementById("toasts");
-const removeRowButton = document.getElementById("removeRow");
-
+let rowsEl;
+let sheetEl;
+let toastsEl;
+let removeRowButton;
 let nextId = 1;
 const errorTimers = new Map();
+let stopListeners = () => {};
 
 function icon(name) {
   return `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name]}</svg>`;
@@ -342,7 +341,7 @@ async function loadFiles(fileList) {
     try {
       const row = emptyRow() || createRow();
       if (FileHandler.isBinaryFile(file)) {
-        if (format === "url" || format === "json") {
+        if (format === "url") {
           showError("Binary files can be encoded as Base64, Base64 URL, Hex, or Binary.");
           continue;
         }
@@ -406,22 +405,27 @@ function reconvertAll() {
   persist();
 }
 
-function initTheme() {
+function initTheme(signal) {
   const preference = readPreference();
   applyTheme(preference);
   setChecked("theme", preference);
   document.querySelectorAll('input[name="theme"]').forEach((input) => {
-    input.addEventListener("change", () => {
-      if (!input.checked) return;
-      savePreference(input.value);
-      applyTheme(input.value);
-      track("theme_select", { theme: input.value });
-    });
+    input.addEventListener(
+      "change",
+      () => {
+        if (!input.checked) return;
+        savePreference(input.value);
+        applyTheme(input.value);
+        track("theme_select", { theme: input.value });
+      },
+      { signal },
+    );
   });
-  watchSystemTheme(readPreference);
+  const stopWatch = watchSystemTheme(readPreference);
+  signal.addEventListener("abort", stopWatch);
 }
 
-function initConsent() {
+function initConsent(signal) {
   const banner = document.getElementById("analyticsConsent");
   const saved = storageGet(CONSENT_KEY);
   if (saved === "accepted" && typeof gtag === "function") {
@@ -429,43 +433,63 @@ function initConsent() {
   }
   if (saved !== "accepted" && saved !== "declined") banner.hidden = false;
 
-  document.getElementById("gaAccept").addEventListener("click", () => {
-    if (typeof gtag === "function") gtag("consent", "update", { analytics_storage: "granted" });
-    storageSet(CONSENT_KEY, "accepted");
-    banner.hidden = true;
-    showSuccess("Analytics enabled.");
-  });
+  document.getElementById("gaAccept").addEventListener(
+    "click",
+    () => {
+      if (typeof gtag === "function") gtag("consent", "update", { analytics_storage: "granted" });
+      storageSet(CONSENT_KEY, "accepted");
+      banner.hidden = true;
+      showSuccess("Analytics enabled.");
+    },
+    { signal },
+  );
 
-  document.getElementById("gaDecline").addEventListener("click", () => {
-    if (typeof gtag === "function") gtag("consent", "update", { analytics_storage: "denied" });
-    storageSet(CONSENT_KEY, "declined");
-    banner.hidden = true;
-    showSuccess("Analytics disabled.");
-  });
+  document.getElementById("gaDecline").addEventListener(
+    "click",
+    () => {
+      if (typeof gtag === "function") gtag("consent", "update", { analytics_storage: "denied" });
+      storageSet(CONSENT_KEY, "declined");
+      banner.hidden = true;
+      showSuccess("Analytics disabled.");
+    },
+    { signal },
+  );
 }
 
-function initInstall() {
+function initInstall(signal) {
   let deferredPrompt = null;
   const installBtn = document.getElementById("installBtn");
 
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
-    installBtn.hidden = false;
-  });
+  window.addEventListener(
+    "beforeinstallprompt",
+    (event) => {
+      event.preventDefault();
+      deferredPrompt = event;
+      installBtn.hidden = false;
+    },
+    { signal },
+  );
 
-  installBtn.addEventListener("click", async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const choice = await deferredPrompt.userChoice;
-    track("pwa_install", { outcome: choice.outcome });
-    deferredPrompt = null;
-    installBtn.hidden = true;
-  });
+  installBtn.addEventListener(
+    "click",
+    async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      track("pwa_install", { outcome: choice.outcome });
+      deferredPrompt = null;
+      installBtn.hidden = true;
+    },
+    { signal },
+  );
 
-  window.addEventListener("appinstalled", () => {
-    installBtn.hidden = true;
-  });
+  window.addEventListener(
+    "appinstalled",
+    () => {
+      installBtn.hidden = true;
+    },
+    { signal },
+  );
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js").catch(() => {
@@ -474,60 +498,102 @@ function initInstall() {
   }
 }
 
-function initDragAndDrop() {
+function initDragAndDrop(signal) {
   let dragDepth = 0;
 
-  window.addEventListener("dragover", (event) => event.preventDefault());
-  window.addEventListener("drop", (event) => {
-    event.preventDefault();
-    if (sheetEl.contains(event.target)) return;
-    if (event.dataTransfer?.files?.length) loadFiles(event.dataTransfer.files);
-  });
+  window.addEventListener("dragover", (event) => event.preventDefault(), { signal });
+  window.addEventListener(
+    "drop",
+    (event) => {
+      event.preventDefault();
+      if (typeof event.target?.nodeType === "number" && sheetEl.contains(event.target)) return;
+      if (event.dataTransfer?.files?.length) loadFiles(event.dataTransfer.files);
+    },
+    { signal },
+  );
 
-  sheetEl.addEventListener("dragenter", (event) => {
-    event.preventDefault();
-    dragDepth += 1;
-    sheetEl.classList.add("is-dragover");
-  });
-  sheetEl.addEventListener("dragover", (event) => event.preventDefault());
-  sheetEl.addEventListener("dragleave", () => {
-    dragDepth -= 1;
-    if (dragDepth <= 0) {
+  sheetEl.addEventListener(
+    "dragenter",
+    (event) => {
+      event.preventDefault();
+      dragDepth += 1;
+      sheetEl.classList.add("is-dragover");
+    },
+    { signal },
+  );
+  sheetEl.addEventListener("dragover", (event) => event.preventDefault(), { signal });
+  sheetEl.addEventListener(
+    "dragleave",
+    () => {
+      dragDepth -= 1;
+      if (dragDepth <= 0) {
+        dragDepth = 0;
+        sheetEl.classList.remove("is-dragover");
+      }
+    },
+    { signal },
+  );
+  sheetEl.addEventListener(
+    "drop",
+    (event) => {
+      event.preventDefault();
       dragDepth = 0;
       sheetEl.classList.remove("is-dragover");
-    }
-  });
-  sheetEl.addEventListener("drop", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    dragDepth = 0;
-    sheetEl.classList.remove("is-dragover");
-    if (event.dataTransfer?.files?.length) loadFiles(event.dataTransfer.files);
-  });
+      if (event.dataTransfer?.files?.length) loadFiles(event.dataTransfer.files);
+    },
+    { signal },
+  );
 }
 
-document.querySelectorAll('input[name="format"]').forEach((input) => {
-  input.addEventListener("change", () => {
-    if (!input.checked) return;
-    reconvertAll();
-    track("format_change", { format: input.value });
+export function startApp() {
+  stopListeners();
+  const controller = new AbortController();
+  const { signal } = controller;
+  stopListeners = () => controller.abort();
+
+  rowsEl = document.getElementById("rows");
+  sheetEl = document.getElementById("sheet");
+  toastsEl = document.getElementById("toasts");
+  removeRowButton = document.getElementById("removeRow");
+  rowsEl.replaceChildren();
+  toastsEl.replaceChildren();
+  nextId = 1;
+  errorTimers.forEach((timer) => clearTimeout(timer));
+  errorTimers.clear();
+
+  document.querySelectorAll('input[name="format"]').forEach((input) => {
+    input.addEventListener(
+      "change",
+      () => {
+        if (!input.checked) return;
+        reconvertAll();
+        track("format_change", { format: input.value });
+      },
+      { signal },
+    );
   });
-});
 
-document.getElementById("addRow").addEventListener("click", addRow);
-removeRowButton.addEventListener("click", removeLastRow);
-document.getElementById("clearAll").addEventListener("click", clearAll);
-document.getElementById("fileInput").addEventListener("change", (event) => {
-  const { files } = event.target;
-  if (files?.length) loadFiles(files);
-  event.target.value = "";
-});
+  document.getElementById("addRow").addEventListener("click", addRow, { signal });
+  removeRowButton.addEventListener("click", removeLastRow, { signal });
+  document.getElementById("clearAll").addEventListener("click", clearAll, { signal });
+  document.getElementById("fileInput").addEventListener(
+    "change",
+    (event) => {
+      const { files } = event.target;
+      if (files?.length) loadFiles(files);
+      event.target.value = "";
+    },
+    { signal },
+  );
 
-initTheme();
-initConsent();
-initInstall();
-initDragAndDrop();
-if (!restore()) {
-  for (let index = 0; index < DEFAULT_ROWS; index += 1) createRow();
+  initTheme(signal);
+  initConsent(signal);
+  initInstall(signal);
+  initDragAndDrop(signal);
+  if (!restore()) {
+    for (let index = 0; index < DEFAULT_ROWS; index += 1) createRow();
+  }
+  updateLabels();
 }
-updateLabels();
+
+if (typeof document !== "undefined" && document.getElementById("rows")) startApp();

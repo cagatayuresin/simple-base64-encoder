@@ -2,7 +2,7 @@
   "name": "Simple Base64 Encoder",
   "short_name": "Base64 Encoder",
   "id": "./",
-  "description": "Encode and decode Base64, URL-safe Base64, hex, binary, URL encoding, and JSON. All processing happens locally in the browser.",
+  "description": "Encode and decode Base64, URL-safe Base64, hex, binary, and URL encoding. All processing happens locally in the browser.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

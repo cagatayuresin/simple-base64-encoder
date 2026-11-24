@@ -20,7 +20,7 @@ npm run lint
 npm test
 ```
 
-`npm run lint` covers ESLint, Stylelint, and html-validate. `npm test` covers encode and decode round trips.
+`npm run lint` covers ESLint, Stylelint, and html-validate. `npm test` runs the unit tests and requires at least 90% line, branch, and function coverage of `src/js`.
 
 ## Notes
 

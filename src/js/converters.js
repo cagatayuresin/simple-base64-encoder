@@ -107,22 +107,4 @@ export const FormatConverter = {
     },
     name: "URL Encoding",
   },
-
-  json: {
-    encode: (input) => {
-      try {
-        return JSON.stringify(JSON.parse(input), null, 2);
-      } catch (error) {
-        throw new Error(`Invalid JSON format: ${error.message}`);
-      }
-    },
-    decode: (input) => {
-      try {
-        return JSON.stringify(JSON.parse(input));
-      } catch (error) {
-        throw new Error(`Invalid JSON format: ${error.message}`);
-      }
-    },
-    name: "JSON Formatter",
-  },
 };

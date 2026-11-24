@@ -28,16 +28,13 @@ test("invalid hex length throws", () => {
   assert.throws(() => FormatConverter.hex.decode("abc"), /Invalid hex string length/);
 });
 
-test("json pretty-prints and minifies", () => {
-  const pretty = FormatConverter.json.encode('{"a":1}');
-  assert.match(pretty, /\n/);
-  assert.equal(FormatConverter.json.decode(pretty), '{"a":1}');
-});
-
 test("empty text round-trips", () => {
   assert.equal(FormatConverter.base64.encode(""), "");
   assert.equal(FormatConverter.base64.decode(""), "");
   assert.equal(FormatConverter.hex.encode(""), "");
+  assert.equal(FormatConverter.hex.decode(""), "");
+  assert.equal(FormatConverter.binary.decode("   "), "");
+  assert.equal(FormatConverter.base64url.decode("YQ"), "a");
   assert.equal(FormatConverter.url.encode(""), "");
 });
 
@@ -48,12 +45,28 @@ test("file heuristic treats images as binary and notes as text", () => {
   assert.equal(FileHandler.isBinaryFile(note), false);
 });
 
+test("base64url replaces plus, slash, and padding", () => {
+  const bytes = new Uint8Array([0xfb, 0xff, 0xef]);
+  const encoded = encodeBytes("base64", bytes);
+  assert.match(encoded, /[+/=]/);
+  const url = encodeBytes("base64url", bytes);
+  assert.equal(/[+/=]/.test(url), false);
+  assert.equal(FormatConverter.base64url.decode(url), FormatConverter.base64.decode(encoded));
+});
+
+test("base64 encoding walks long byte arrays in chunks", () => {
+  const bytes = new Uint8Array(9000);
+  bytes[8999] = 2;
+  assert.equal(encodeBytes("base64", bytes).length > 0, true);
+});
+
 test("encodeBytes encodes raw bytes and rejects text-only formats", () => {
   const bytes = new Uint8Array([0xff]);
   assert.equal(encodeBytes("hex", bytes), "ff");
   assert.equal(encodeBytes("base64", bytes), "/w==");
   assert.equal(encodeBytes("base64url", bytes), "_w");
   assert.equal(encodeBytes("binary", bytes), "11111111");
+  assert.equal(encodeBytes("base64", [0xff]), "/w==");
   assert.throws(() => encodeBytes("url", bytes), /Binary files/);
-  assert.throws(() => encodeBytes("json", bytes), /Binary files/);
+  assert.throws(() => encodeBytes("gif", bytes), /Binary files/);
 });

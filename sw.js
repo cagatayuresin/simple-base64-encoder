@@ -3,7 +3,7 @@
  * Paths are relative so GitHub Pages project sites resolve correctly.
  */
 
-const CACHE = "static-v3.1.0";
+const CACHE = "static-v3.2.0";
 const FILES = [
   "./",
   "./index.html",

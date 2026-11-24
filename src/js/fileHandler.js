@@ -94,6 +94,6 @@ export const FileHandler = {
     if (binaryExtensions.some((extension) => name.endsWith(extension))) return true;
 
     if (!type && file.size <= 64 * 1024) return false;
-    return Boolean(type) || file.size > 64 * 1024;
+    return true;
   },
 };
