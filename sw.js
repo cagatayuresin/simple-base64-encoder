@@ -3,7 +3,7 @@
  * Paths are relative so GitHub Pages project sites resolve correctly.
  */
 
-const CACHE = "static-v3.2.0";
+const CACHE = "static-v3.3.1";
 const FILES = [
   "./",
   "./index.html",
@@ -48,7 +48,12 @@ self.addEventListener("fetch", (event) => {
         .then((response) => {
           if (!response || response.status !== 200 || response.type !== "basic") return response;
           const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+          caches
+            .open(CACHE)
+            .then((cache) => cache.put(event.request, copy))
+            .catch(() => {
+              /* A failed cache write still leaves the network response usable. */
+            });
           return response;
         })
         .catch(() => {

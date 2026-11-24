@@ -126,10 +126,13 @@ function fresh() {
   ctx.app.startApp();
 }
 
-test("starts with three empty rows and no JSON format", async () => {
+test("starts with three rows and an admin example", async () => {
   const app = await import("../src/js/app.js");
   ctx.app = app;
   assert.equal(rows().length, 3);
+  assert.equal(field(rows()[0], "plain").value, "admin");
+  assert.equal(field(rows()[0], "encoded").value, FormatConverter.base64.encode("admin"));
+  assert.equal(field(rows()[1], "plain").value, "");
   assert.deepEqual(
     rows().map((row) => row.querySelector(".row-index").textContent),
     ["1", "2", "3"],
@@ -258,8 +261,9 @@ test("loads text and binary files and skips files it cannot encode", async () =>
   const note = fileOf("note.txt", "Merhaba", "text/plain");
   Object.defineProperty(input, "files", { configurable: true, value: [note] });
   input.dispatchEvent(new window.Event("change"));
-  await until(() => field(rows()[0], "plain").value === "Merhaba");
-  assert.equal(field(rows()[0], "encoded").value, FormatConverter.base64.encode("Merhaba"));
+  await until(() => rows().some((row) => field(row, "plain").value === "Merhaba"));
+  const loadedNote = rows().find((row) => field(row, "plain").value === "Merhaba");
+  assert.equal(field(loadedNote, "encoded").value, FormatConverter.base64.encode("Merhaba"));
   assert.equal(toastText().includes("Loaded note.txt."), true);
 
   document.getElementById("toasts").replaceChildren();
@@ -341,7 +345,7 @@ test("accepts dropped files and tracks drag depth", async () => {
   sheetDrop.dataTransfer = { files: [dropped] };
   document.getElementById("toasts").replaceChildren();
   sheet.dispatchEvent(sheetDrop);
-  await until(() => field(rows()[0], "plain").value === "Hi");
+  await until(() => rows().some((row) => field(row, "plain").value === "Hi"));
   assert.equal(toastText().filter((text) => text.startsWith("Loaded")).length, 1);
 
   const outsideFile = fileOf("window.txt", "Out", "text/plain");

@@ -7,6 +7,7 @@ const CONSENT_KEY = "ga_consent_v1";
 const MAX_FILE_BYTES = 5 * 1024 * 1024;
 const PERSIST_LIMIT = 100000;
 const DEFAULT_ROWS = 3;
+const EXAMPLE_TEXT = "admin";
 
 const LABELS = {
   base64: ["Base64", "Text"],
@@ -182,13 +183,15 @@ function bindField(row, textarea, source) {
   });
 }
 
-function createRow(data = { encoded: "", plain: "", source: "plain" }) {
+function createRow(data) {
   const id = nextId;
   nextId += 1;
+  const encodedValue = data?.encoded || "";
+  const plainValue = data?.plain || "";
   const [encodedLabel, plainLabel] = labelsFor(selectedFormat());
   const row = document.createElement("article");
   row.className = "row";
-  row.dataset.source = data.source === "encoded" ? "encoded" : "plain";
+  row.dataset.source = data?.source === "encoded" ? "encoded" : "plain";
 
   const index = document.createElement("span");
   index.className = "row-index";
@@ -198,14 +201,14 @@ function createRow(data = { encoded: "", plain: "", source: "plain" }) {
     id: `encoded-${id}`,
     side: "encoded",
     label: encodedLabel,
-    value: data.encoded || "",
+    value: encodedValue,
     fieldClass: "field-encoded",
   });
   const plainField = buildField({
     id: `plain-${id}`,
     side: "plain",
     label: plainLabel,
-    value: data.plain || "",
+    value: plainValue,
     fieldClass: "field-plain",
   });
 
@@ -323,6 +326,20 @@ function emptyRow() {
     const encoded = row.querySelector('[data-side="encoded"]').value;
     const plain = row.querySelector('[data-side="plain"]').value;
     return !encoded && !plain;
+  });
+}
+
+function seedExample() {
+  const row = rowsEl.querySelector(".row");
+  const plain = row.querySelector('[data-side="plain"]');
+  plain.value = EXAMPLE_TEXT;
+  convertRow(row, "plain");
+  persist();
+}
+
+function openFiles(fileList) {
+  loadFiles(fileList).catch(() => {
+    showError("The file could not be opened.");
   });
 }
 
@@ -507,7 +524,7 @@ function initDragAndDrop(signal) {
     (event) => {
       event.preventDefault();
       if (typeof event.target?.nodeType === "number" && sheetEl.contains(event.target)) return;
-      if (event.dataTransfer?.files?.length) loadFiles(event.dataTransfer.files);
+      if (event.dataTransfer?.files?.length) openFiles(event.dataTransfer.files);
     },
     { signal },
   );
@@ -539,7 +556,7 @@ function initDragAndDrop(signal) {
       event.preventDefault();
       dragDepth = 0;
       sheetEl.classList.remove("is-dragover");
-      if (event.dataTransfer?.files?.length) loadFiles(event.dataTransfer.files);
+      if (event.dataTransfer?.files?.length) openFiles(event.dataTransfer.files);
     },
     { signal },
   );
@@ -580,7 +597,7 @@ export function startApp() {
     "change",
     (event) => {
       const { files } = event.target;
-      if (files?.length) loadFiles(files);
+      if (files?.length) openFiles(files);
       event.target.value = "";
     },
     { signal },
@@ -592,6 +609,7 @@ export function startApp() {
   initDragAndDrop(signal);
   if (!restore()) {
     for (let index = 0; index < DEFAULT_ROWS; index += 1) createRow();
+    seedExample();
   }
   updateLabels();
 }

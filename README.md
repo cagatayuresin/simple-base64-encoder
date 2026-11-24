@@ -8,7 +8,7 @@ Live site: [https://cagatayuresin.github.io/simple-base64-encoder/](https://caga
 
 ## Use
 
-1. The page opens with three rows. The left field is the encoded value and the right field is the text. Typing in either one updates the other.
+1. The page opens with three rows. The first row shows admin so the conversion is visible. The left field is the encoded value and the right field is the text. Typing in either one updates the other.
 2. Use + to add a row and - to remove the last one. Each row also has its own delete button. Clear all restores three empty rows.
 3. Choose Base64, Base64 URL, Hex, Binary, or URL.
 4. Drop a file on the sheet, or use Open file. Text files fill the text side. Binary files are encoded on the left.

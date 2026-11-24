@@ -3,6 +3,13 @@
  * String encode/decode stays UTF-8 safe and matches the previous rules.
  */
 
+function toBase64Url(encoded) {
+  const translated = encoded.replace(/\+/g, "-").replace(/\//g, "_");
+  let end = translated.length;
+  while (end > 0 && translated.charCodeAt(end - 1) === 61) end -= 1;
+  return translated.slice(0, end);
+}
+
 function bytesToBase64(bytes) {
   let binary = "";
   const chunkSize = 0x2000;
@@ -17,7 +24,7 @@ export function encodeBytes(format, bytes) {
   const list = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
   if (format === "base64") return bytesToBase64(list);
   if (format === "base64url") {
-    return bytesToBase64(list).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+    return toBase64Url(bytesToBase64(list));
   }
   if (format === "hex") {
     return Array.from(list, (byte) => byte.toString(16).padStart(2, "0")).join("");
@@ -57,7 +64,7 @@ export const FormatConverter = {
   base64url: {
     encode: (input) => {
       const encoded = FormatConverter.base64.encode(input);
-      return encoded.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+      return toBase64Url(encoded);
     },
     decode: (input) => {
       let padded = input.replace(/-/g, "+").replace(/_/g, "/");
@@ -77,7 +84,7 @@ export const FormatConverter = {
         throw new Error("Invalid hex string length");
       }
       const bytePairs = input.match(/.{2}/g) || [];
-      const bytes = new Uint8Array(bytePairs.map((pair) => parseInt(pair, 16)));
+      const bytes = new Uint8Array(bytePairs.map((pair) => Number.parseInt(pair, 16)));
       return new TextDecoder().decode(bytes);
     },
     name: "Hexadecimal",
@@ -90,7 +97,7 @@ export const FormatConverter = {
     },
     decode: (input) => {
       const bits = input.trim().split(/\s+/).filter(Boolean);
-      const bytes = new Uint8Array(bits.map((bin) => parseInt(bin, 2)));
+      const bytes = new Uint8Array(bits.map((bin) => Number.parseInt(bin, 2)));
       return new TextDecoder().decode(bytes);
     },
     name: "Binary",
