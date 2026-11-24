@@ -19,8 +19,8 @@
           var stored = localStorage.getItem("theme");
           if (stored === "light" || stored === "dark" || stored === "system") preference = stored;
         } catch (error) {
-          // Intentionally ignored: blocked storage throws, and system is already the fallback.
           preference = "system";
+          document.documentElement.dataset.themeStorage = error.name || "blocked";
         }
         var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         var resolved = preference === "dark" || (preference === "system" && dark) ? "dark" : "light";
