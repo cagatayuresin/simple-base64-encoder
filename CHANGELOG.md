@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-11-24
+
+### Added
+
+- The first row opens with admin so the conversion is visible.
+- Footer links for the website, GitHub, LinkedIn, MIT, and Security, each with an icon.
+- CI, license, live site, and Node.js badges in the README.
+- Unit tests that require at least 90% coverage of `src/js`.
+
+### Changed
+
+- Rows are back: the encoded value is on the left and the text is on the right, and either side updates the other.
+- The page stays vertically centered when it is shorter than the screen.
+- The site link is https://cagatayuresin.com.
+- Package install in CI ignores dependency scripts.
+
+### Removed
+
+- The JSON format.
+
 ## [3.0.0] - 2026-11-24
 
 ### Changed
