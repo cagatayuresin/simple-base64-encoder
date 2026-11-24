@@ -3,13 +3,13 @@
  */
 
 export const FileHandler = {
-  readAsText: (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (event) => resolve(event.target.result);
-      reader.onerror = () => reject(new Error("Failed to read file"));
-      reader.readAsText(file);
-    }),
+  readAsText: async (file) => {
+    try {
+      return await file.text();
+    } catch (error) {
+      throw new Error("Failed to read file", { cause: error });
+    }
+  },
 
   getFileInfo: (file) => {
     const sizeInBytes = file.size;

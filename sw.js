@@ -3,7 +3,7 @@
  * Paths are relative so GitHub Pages project sites resolve correctly.
  */
 
-const CACHE = "static-v3.3.2";
+const CACHE = "static-v3.3.3";
 const FILES = [
   "./",
   "./index.html",
@@ -37,29 +37,36 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+async function cacheResponse(request, response) {
+  if (response?.status === 200 && response?.type === "basic") {
+    const cache = await caches.open(CACHE);
+    await cache.put(request, response.clone());
+  }
+}
+
+async function fromNetwork(request) {
+  const response = await fetch(request);
+  try {
+    await cacheResponse(request, response);
+  } catch {
+    /* A failed cache write still leaves the network response usable. */
+  }
+  return response;
+}
+
+async function fromCacheOrNetwork(request) {
+  const cached = await caches.match(request);
+  if (cached) return cached;
+  try {
+    return await fromNetwork(request);
+  } catch {
+    if (request.destination === "document") return caches.match("./index.html");
+    return Response.error();
+  }
+}
+
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   if (!event.request.url.startsWith(self.location.origin)) return;
-
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request)
-        .then((response) => {
-          if (response?.status !== 200 || response?.type !== "basic") return response;
-          const copy = response.clone();
-          caches
-            .open(CACHE)
-            .then((cache) => cache.put(event.request, copy))
-            .catch(() => {
-              /* A failed cache write still leaves the network response usable. */
-            });
-          return response;
-        })
-        .catch(() => {
-          if (event.request.destination === "document") return caches.match("./index.html");
-          return Response.error();
-        });
-    })
-  );
+  event.respondWith(fromCacheOrNetwork(event.request));
 });

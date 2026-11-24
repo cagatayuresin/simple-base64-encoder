@@ -67,23 +67,10 @@ test("isBinaryFile classifies text, binary, extensions, and unknown files", () =
 });
 
 test("readAsText resolves text and rejects a reader error", async () => {
-  const original = globalThis.FileReader;
-  try {
-    globalThis.FileReader = class {
-      readAsText() {
-        this.onload({ target: { result: "Merhaba" } });
-      }
-    };
-    assert.equal(await FileHandler.readAsText({}), "Merhaba");
-
-    globalThis.FileReader = class {
-      readAsText() {
-        this.onerror();
-      }
-    };
-    await assert.rejects(FileHandler.readAsText({}), /Failed to read file/);
-  } finally {
-    if (original) globalThis.FileReader = original;
-    else delete globalThis.FileReader;
-  }
+  const file = new File(["Merhaba"], "note.txt", { type: "text/plain" });
+  assert.equal(await FileHandler.readAsText(file), "Merhaba");
+  await assert.rejects(
+    FileHandler.readAsText({ text: () => Promise.reject(new Error("nope")) }),
+    /Failed to read file/,
+  );
 });

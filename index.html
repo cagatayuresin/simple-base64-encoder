@@ -19,7 +19,7 @@
           var stored = localStorage.getItem("theme");
           if (stored === "light" || stored === "dark" || stored === "system") preference = stored;
         } catch (error) {
-          // Private browsing can block storage. The page still follows the system theme.
+          // Intentionally ignored: blocked storage throws, and system is already the fallback.
           preference = "system";
         }
         var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
